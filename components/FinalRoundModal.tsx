@@ -1,18 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "motion/react";
 import type { PipelineRow } from "@/lib/notion/data";
 import { fetchJSON } from "@/lib/client/useDashboard";
 import { STAGE_REACHED_OPTIONS } from "@/lib/notion/config";
+import { todayLocalISO } from "@/lib/client/format";
 import { useToast } from "./Toast";
-
-function todayLocalISO(): string {
-  return new Intl.DateTimeFormat("en-CA", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).format(new Date());
-}
 
 export default function FinalRoundModal({
   row,
@@ -53,14 +47,20 @@ export default function FinalRoundModal({
     "tap w-full rounded-lg border border-panel-border bg-bg px-3 py-2 text-[14px] text-ink outline-none focus:border-accent/50";
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.2 }}
       className="fixed inset-0 z-40 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
       onClick={onClose}
     >
-      <form
+      <motion.form
+        initial={{ opacity: 0, scale: 0.96, y: 12 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
         onSubmit={submit}
         onClick={(e) => e.stopPropagation()}
-        className="glass glow-live w-full max-w-lg space-y-3 p-5"
+        className="glass hud-corners glow-live w-full max-w-lg space-y-3 p-5"
         style={{ maxHeight: "90dvh", overflowY: "auto" }}
       >
         <h2 className="font-mono text-[12px] uppercase tracking-[0.22em] text-accent text-glow">
@@ -153,7 +153,7 @@ export default function FinalRoundModal({
             {saving ? "Writing to Notion" : "Log it"}
           </button>
         </div>
-      </form>
-    </div>
+      </motion.form>
+    </motion.div>
   );
 }

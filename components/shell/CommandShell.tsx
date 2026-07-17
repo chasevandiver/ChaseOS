@@ -8,6 +8,7 @@ import { useMode } from "@/lib/client/useMode";
 import { ToastProvider } from "@/components/Toast";
 import FinalRoundModal from "@/components/FinalRoundModal";
 import AmbientBackdrop from "./AmbientBackdrop";
+import BootSequence from "./BootSequence";
 import CommandBar from "./CommandBar";
 import ModeDock from "./ModeDock";
 import ModeViewport from "./ModeViewport";
@@ -95,6 +96,7 @@ export default function CommandShell() {
       <ToastProvider>
         <AmbientBackdrop />
         <ShellInner />
+        <BootSequence />
       </ToastProvider>
     </MotionConfig>
   );
