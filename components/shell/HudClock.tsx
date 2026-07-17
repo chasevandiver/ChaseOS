@@ -8,6 +8,8 @@ export default function HudClock() {
   const [now, setNow] = useState<Date | null>(null);
 
   useEffect(() => {
+    // Seed the clock after hydration; the server pass renders a spacer.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setNow(new Date());
     const t = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(t);

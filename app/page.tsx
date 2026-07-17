@@ -1,5 +1,5 @@
-import Dashboard from "@/components/Dashboard";
+import CommandShell from "@/components/shell/CommandShell";
 
 export default function Home() {
-  return <Dashboard />;
+  return <CommandShell />;
 }

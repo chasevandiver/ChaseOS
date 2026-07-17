@@ -17,14 +17,14 @@ export default function StatCounter({
   const rafRef = useRef(0);
 
   useEffect(() => {
+    const from = fromRef.current;
+    if (from === value) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) {
       fromRef.current = value;
-      setDisplay(value);
-      return;
+      rafRef.current = requestAnimationFrame(() => setDisplay(value));
+      return () => cancelAnimationFrame(rafRef.current);
     }
-    const from = fromRef.current;
-    if (from === value) return;
     const start = performance.now();
     const tick = (t: number) => {
       const p = Math.min((t - start) / duration, 1);
