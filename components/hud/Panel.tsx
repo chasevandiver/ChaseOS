@@ -29,7 +29,9 @@ export default function Panel({
         <div className="shrink-0 px-4 pt-3 pb-2">
           <div className="flex items-center justify-between gap-3">
             <h2 className="font-mono text-[10px] uppercase tracking-[0.26em] text-muted">
-              <span className="mr-1.5 text-accent/60">▸</span>
+              <span className="mr-1.5 opacity-70" style={{ color: "var(--tint, var(--accent))" }}>
+                ▸
+              </span>
               {title}
             </h2>
             {right}

@@ -10,8 +10,8 @@ export default function manifest(): MetadataRoute.Manifest {
     // Landscape is the primary orientation on iPad. iOS ignores this field
     // and follows device rotation, so portrait keeps working there.
     orientation: "landscape",
-    background_color: "#05080d",
-    theme_color: "#05080d",
+    background_color: "#020409",
+    theme_color: "#020409",
     icons: [
       { src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },
       { src: "/icons/icon-512.png", sizes: "512x512", type: "image/png" },

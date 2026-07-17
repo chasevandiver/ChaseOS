@@ -14,7 +14,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
       <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-accent/70">
         {children}
       </span>
-      <span className="anim-line-wipe h-px flex-1 bg-gradient-to-r from-accent/30 to-transparent" />
+      <hr className="holo-rule anim-line-wipe flex-1" />
     </div>
   );
 }
@@ -113,7 +113,7 @@ export default function TargetDetail({
 
             <motion.div variants={cascadeItem}>
               <SectionLabel>Telemetry</SectionLabel>
-              <div className="grid grid-cols-3 gap-3 rounded-xl border border-panel-border bg-bg-raised/40 p-3">
+              <div className="grid grid-cols-3 gap-3 px-1 py-2">
                 <Telemetry label="Found" iso={role.found} />
                 <Telemetry label="Posted" iso={role.postedDate} />
                 <Telemetry label="Applied" iso={role.appliedDate} />

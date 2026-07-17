@@ -5,6 +5,8 @@ import { MotionConfig } from "motion/react";
 import type { PipelineRow, RadarRole } from "@/lib/notion/data";
 import { useDashboard } from "@/lib/client/useDashboard";
 import { useMode } from "@/lib/client/useMode";
+import { useRadarActions } from "@/lib/client/useRadarActions";
+import { usePipelineActions } from "@/lib/client/usePipelineActions";
 import { deriveStats } from "@/lib/client/stats";
 import { ToastProvider } from "@/components/Toast";
 import FinalRoundModal from "@/components/FinalRoundModal";
@@ -46,6 +48,11 @@ function ShellInner() {
 
   const hasError = Boolean(radar.error || pipeline.error || projects.error || briefing.error);
 
+  // Mutation hooks live at the shell so both the location UIs and the
+  // command console drive the same optimistic writes.
+  const radarActions = useRadarActions(dash.setRadar, onApplied);
+  const pipelineActions = usePipelineActions(dash.setPipeline);
+
   // Spoken status report for the `status` console command.
   const statusLine = useCallback(() => {
     const s = deriveStats(radar.data, pipeline.data, projects.data);
@@ -71,14 +78,12 @@ function ShellInner() {
 
         <ModeViewport mode={mode} dir={dir}>
           {mode === "overview" && <OverviewMode dash={dash} setMode={setMode} />}
-          {mode === "jobs" && (
-            <JobsMode radar={radar} setRadar={dash.setRadar} filter={filter} onApplied={onApplied} />
-          )}
+          {mode === "jobs" && <JobsMode radar={radar} filter={filter} actions={radarActions} />}
           {mode === "pipeline" && (
             <PipelineMode
               pipeline={pipeline}
-              setPipeline={dash.setPipeline}
               filter={filter}
+              actions={pipelineActions}
               onLogFinalRound={setFinalRoundFor}
             />
           )}
@@ -95,6 +100,11 @@ function ShellInner() {
           filter={filter}
           setFilter={setFilter}
           statusLine={statusLine}
+          radar={radar.data}
+          pipeline={pipeline.data}
+          projects={projects.data}
+          radarActions={radarActions}
+          pipelineActions={pipelineActions}
         />
       </div>
 

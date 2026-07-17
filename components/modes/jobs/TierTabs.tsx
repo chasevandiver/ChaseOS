@@ -39,8 +39,11 @@ export default function TierTabs({
               <motion.span
                 layoutId="tier-underline"
                 transition={{ type: "spring", stiffness: 500, damping: 40 }}
-                className="absolute inset-x-1 bottom-1 h-px bg-accent"
-                style={{ boxShadow: "0 0 8px rgba(56, 220, 255, 0.8)" }}
+                className="absolute inset-x-1 bottom-1 h-px"
+                style={{
+                  background: "var(--tint, var(--accent))",
+                  boxShadow: "0 0 8px var(--tint, var(--accent))",
+                }}
               />
             )}
             <span>{TAB_LABEL[t]}</span>

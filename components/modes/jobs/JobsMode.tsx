@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import type { RadarRole } from "@/lib/notion/data";
 import type { Slice } from "@/lib/client/useDashboard";
-import { useRadarActions } from "@/lib/client/useRadarActions";
+import type { useRadarActions } from "@/lib/client/useRadarActions";
 import { isTyping } from "@/lib/client/useMode";
 import Panel from "@/components/hud/Panel";
 import TierTabs, { TABS, type Tab } from "./TierTabs";
@@ -21,19 +21,16 @@ function matchesTab(r: RadarRole, tab: Tab): boolean {
 // right (slide-over on phones).
 export default function JobsMode({
   radar,
-  setRadar,
   filter,
-  onApplied,
+  actions,
 }: {
   radar: Slice<RadarRole[]>;
-  setRadar: React.Dispatch<React.SetStateAction<Slice<RadarRole[]>>>;
   filter: string;
-  onApplied: (role: RadarRole, followUp: string) => void;
+  actions: ReturnType<typeof useRadarActions>;
 }) {
   const [tab, setTab] = useState<Tab>("A");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
-  const actions = useRadarActions(setRadar, onApplied);
 
   const roles = radar.data ?? [];
   const q = filter.trim().toLowerCase();

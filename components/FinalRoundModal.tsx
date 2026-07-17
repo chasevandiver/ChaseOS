@@ -63,9 +63,12 @@ export default function FinalRoundModal({
         className="glass hud-corners glow-live w-full max-w-lg space-y-3 p-5"
         style={{ maxHeight: "90dvh", overflowY: "auto" }}
       >
-        <h2 className="font-mono text-[12px] uppercase tracking-[0.22em] text-accent text-glow">
-          Log Final Round
-        </h2>
+        <div>
+          <h2 className="font-mono text-[12px] uppercase tracking-[0.22em] text-accent text-glow">
+            ▸ Log Final Round
+          </h2>
+          <hr className="holo-rule mt-2" />
+        </div>
 
         <div className="grid grid-cols-2 gap-3">
           <label className="block">

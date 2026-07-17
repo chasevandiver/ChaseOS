@@ -37,7 +37,7 @@ export default function PipelineCard({
     <motion.article
       layout
       variants={rise}
-      className={`rounded-xl border border-panel-border bg-bg-raised/60 p-3.5 transition-opacity ${
+      className={`glass hover-light p-3.5 transition-opacity ${
         overdue ? "glow-amber" : ""
       } ${isBusy ? "opacity-60" : ""}`}
     >

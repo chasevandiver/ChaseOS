@@ -3,7 +3,7 @@
 import { motion } from "motion/react";
 import type { PipelineRow } from "@/lib/notion/data";
 import type { Slice } from "@/lib/client/useDashboard";
-import { usePipelineActions } from "@/lib/client/usePipelineActions";
+import type { usePipelineActions } from "@/lib/client/usePipelineActions";
 import { PIPELINE_STAGES } from "@/lib/notion/config";
 import { todayLocalISO } from "@/lib/client/format";
 import { stagger } from "@/lib/client/motion";
@@ -16,16 +16,15 @@ import PipelineCard from "./PipelineCard";
 // open application grouped by stage.
 export default function PipelineMode({
   pipeline,
-  setPipeline,
   filter,
+  actions,
   onLogFinalRound,
 }: {
   pipeline: Slice<PipelineRow[]>;
-  setPipeline: React.Dispatch<React.SetStateAction<Slice<PipelineRow[]>>>;
   filter: string;
+  actions: ReturnType<typeof usePipelineActions>;
   onLogFinalRound: (row: PipelineRow) => void;
 }) {
-  const actions = usePipelineActions(setPipeline);
   const today = todayLocalISO();
 
   const q = filter.trim().toLowerCase();

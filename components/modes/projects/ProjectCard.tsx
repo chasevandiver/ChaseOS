@@ -88,7 +88,7 @@ export default function ProjectCard({
     <motion.article
       layout
       variants={rise}
-      className="glass hud-corners hud-corners-hover glow-live flex flex-col p-3.5"
+      className="glass hover-light flex flex-col p-3.5"
     >
       <div className="flex items-center justify-between gap-2">
         <h3 className="truncate text-[15px] font-semibold text-ink">{project.project}</h3>

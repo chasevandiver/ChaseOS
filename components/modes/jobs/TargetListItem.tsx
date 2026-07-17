@@ -30,12 +30,17 @@ export default function TargetListItem({
       exit={{ opacity: 0, x: 24, transition: { duration: 0.18 } }}
       onClick={onSelect}
       aria-current={active ? "true" : undefined}
-      className={`tap relative w-full rounded-xl border p-3 text-left transition-colors ${
+      className={`tap relative w-full rounded-lg p-3 text-left transition-colors ${
         active
-          ? "border-accent/40 bg-accent-dim/60"
-          : "border-panel-border bg-bg-raised/60 hover:border-accent/20"
+          ? "bg-gradient-to-r from-accent-dim/70 to-transparent"
+          : "hover:bg-panel-strong"
       }`}
     >
+      {/* Hairline separator instead of a boxed border — rows breathe. */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-x-2 bottom-0 h-px bg-gradient-to-r from-panel-border to-transparent"
+      />
       {active && (
         <motion.span
           layoutId="target-active"

@@ -126,6 +126,60 @@ export function useMissionFeed(input: {
     push({ source: "CORE", text: "All systems nominal", tone: "success" }, (d += gap));
   }, [radar, pipeline, projects, briefing]);
 
+  // Diff radar snapshots between syncs: genuinely new roles become events.
+  const prevRadar = useRef<Map<string, RadarRole> | null>(null);
+  useEffect(() => {
+    if (!radar) return;
+    const prev = prevRadar.current;
+    prevRadar.current = new Map(radar.map((r) => [r.id, r]));
+    if (!prev || !seeded.current) return;
+    for (const r of radar) {
+      if (!prev.has(r.id)) {
+        push({
+          source: "RADAR",
+          text: `New lead detected: ${r.role} @ ${r.company}`,
+          tone: "accent",
+        });
+      }
+    }
+     
+  }, [radar]);
+
+  // Diff pipeline snapshots: launches, stage advances, closures, and
+  // rescheduled follow-ups all surface as real mission events.
+  const prevPipeline = useRef<Map<string, PipelineRow> | null>(null);
+  useEffect(() => {
+    if (!pipeline) return;
+    const prev = prevPipeline.current;
+    prevPipeline.current = new Map(pipeline.map((r) => [r.id, r]));
+    if (!prev || !seeded.current) return;
+    const today = todayLocalISO();
+    for (const r of pipeline) {
+      const old = prev.get(r.id);
+      if (!old) {
+        push({ source: "OPS", text: `Mission launched: ${r.company} · ${r.role}`, tone: "success" });
+        continue;
+      }
+      if (old.stage !== r.stage && r.stage) {
+        if (r.stage === "Closed") {
+          push({ source: "OPS", text: `Mission closed: ${r.company}`, tone: "muted" });
+        } else {
+          push({ source: "OPS", text: `Mission advanced: ${r.company} → ${r.stage}`, tone: "violet" });
+        }
+      }
+      const wasOverdue = Boolean(old.nextDate && old.nextDate.slice(0, 10) < today);
+      const nowOverdue = Boolean(r.nextDate && r.nextDate.slice(0, 10) < today);
+      if (wasOverdue && !nowOverdue && r.nextDate) {
+        push({
+          source: "OPS",
+          text: `Follow-up rescheduled: ${r.company} · ${relativeDays(r.nextDate)}`,
+          tone: "success",
+        });
+      }
+    }
+     
+  }, [pipeline]);
+
   // Log real sync completions after the seed.
   const lastSyncRef = useRef<Date | null>(null);
   useEffect(() => {

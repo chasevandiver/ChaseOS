@@ -94,15 +94,16 @@ body {
   -webkit-backdrop-filter: blur(16px);
 }
 
-/* Thin holographic divider — the standard section separator. */
+/* Thin holographic divider — the standard section separator. Picks up the
+   active location's hue via --tint, falling back to cyan. */
 .holo-rule {
   height: 1px;
   border: 0;
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(47, 214, 255, 0.35) 18%,
-    rgba(47, 214, 255, 0.12) 55%,
+    color-mix(in srgb, var(--tint, var(--accent)) 35%, transparent) 18%,
+    color-mix(in srgb, var(--tint, var(--accent)) 12%, transparent) 55%,
     transparent
   );
 }

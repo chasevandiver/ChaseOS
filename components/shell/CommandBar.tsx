@@ -24,8 +24,11 @@ export default function CommandBar({ mode, refreshing, lastFetched, hasError, on
             CHASE<span className="text-ink"> OS</span>
           </h1>
           <span key={mode} className="anim-flicker-in hidden items-baseline gap-2 sm:flex">
-            <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-ink">
-              ▸ {meta.label}
+            <span
+              className="font-mono text-[10px] uppercase tracking-[0.24em] text-ink"
+              style={{ textShadow: `0 0 12px ${meta.tint}55` }}
+            >
+              <span style={{ color: meta.tint }}>▸</span> {meta.label}
             </span>
             <span className="hidden font-mono text-[8px] uppercase tracking-[0.2em] text-faint md:block">
               {meta.sub}

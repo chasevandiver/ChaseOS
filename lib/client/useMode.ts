@@ -6,15 +6,40 @@ export const MODES = ["overview", "jobs", "pipeline", "projects"] as const;
 export type Mode = (typeof MODES)[number];
 
 // Modes are locations inside CHASE OS. Hash keys stay stable for deep links;
-// only the presented identity changed.
+// only the presented identity changed. `tint` is each location's secondary
+// hue signature — cyan stays the primary accent everywhere.
 export const MODE_META: Record<
   Mode,
-  { label: string; sub: string; glyph: string; key: string }
+  { label: string; sub: string; glyph: string; key: string; tint: string }
 > = {
-  overview: { label: "Command Deck", sub: "AI core · overview", glyph: "◉", key: "1" },
-  jobs: { label: "War Room", sub: "target acquisition", glyph: "◎", key: "2" },
-  pipeline: { label: "Mission Control", sub: "active operations", glyph: "≣", key: "3" },
-  projects: { label: "Fabrication Bay", sub: "builds in motion", glyph: "▣", key: "4" },
+  overview: {
+    label: "Command Deck",
+    sub: "AI core · overview",
+    glyph: "◉",
+    key: "1",
+    tint: "#2fd6ff",
+  },
+  jobs: {
+    label: "War Room",
+    sub: "target acquisition",
+    glyph: "◎",
+    key: "2",
+    tint: "#ffb454",
+  },
+  pipeline: {
+    label: "Mission Control",
+    sub: "active operations",
+    glyph: "≣",
+    key: "3",
+    tint: "#7dd3fc",
+  },
+  projects: {
+    label: "Fabrication Bay",
+    sub: "builds in motion",
+    glyph: "▣",
+    key: "4",
+    tint: "#a78bfa",
+  },
 };
 
 function modeFromHash(): Mode {
