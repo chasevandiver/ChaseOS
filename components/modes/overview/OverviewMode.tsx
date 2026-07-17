@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
-import type { PipelineRow, RadarRole } from "@/lib/notion/data";
 import type { useDashboard } from "@/lib/client/useDashboard";
 import type { Mode } from "@/lib/client/useMode";
 import { deriveStats } from "@/lib/client/stats";
@@ -22,9 +21,6 @@ export default function OverviewMode({
 }: {
   dash: ReturnType<typeof useDashboard>;
   setMode: (m: Mode) => void;
-  filter: string;
-  onApplied: (role: RadarRole, followUp: string) => void;
-  onLogFinalRound: (row: PipelineRow) => void;
 }) {
   const { briefing, radar, pipeline, projects, refresh } = dash;
   const stats = deriveStats(radar.data, pipeline.data, projects.data);

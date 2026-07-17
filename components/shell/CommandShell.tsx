@@ -63,9 +63,7 @@ function ShellInner() {
         />
 
         <ModeViewport mode={mode} dir={dir}>
-          {mode === "overview" && (
-            <OverviewMode dash={dash} setMode={setMode} filter={filter} onApplied={onApplied} onLogFinalRound={setFinalRoundFor} />
-          )}
+          {mode === "overview" && <OverviewMode dash={dash} setMode={setMode} />}
           {mode === "jobs" && (
             <JobsMode radar={radar} setRadar={dash.setRadar} filter={filter} onApplied={onApplied} />
           )}
