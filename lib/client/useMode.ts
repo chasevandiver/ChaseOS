@@ -17,7 +17,7 @@ function modeFromHash(): Mode {
   return (MODES as readonly string[]).includes(h) ? (h as Mode) : "overview";
 }
 
-function isTyping(): boolean {
+export function isTyping(): boolean {
   const el = document.activeElement;
   if (!el) return false;
   const tag = el.tagName;
