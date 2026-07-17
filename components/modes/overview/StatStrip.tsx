@@ -17,12 +17,13 @@ type Tile = {
 const TILES: Tile[] = [
   { key: "aTier", label: "A-Tier", sub: "targets hot", mode: "jobs" },
   { key: "radarTotal", label: "Radar", sub: "roles tracked", mode: "jobs" },
-  { key: "pipelineActive", label: "Pipeline", sub: "apps active", mode: "pipeline" },
+  { key: "pipelineActive", label: "Missions", sub: "in flight", mode: "pipeline" },
   { key: "overdue", label: "Overdue", sub: "need action", mode: "pipeline", tone: "amber" },
-  { key: "projectsActive", label: "Projects", sub: "in motion", mode: "projects" },
+  { key: "projectsActive", label: "Builds", sub: "in motion", mode: "projects" },
 ];
 
-// Tappable HUD readouts across the top of the overview; each launches its mode.
+// Floating numeric readouts — pure typography, no boxes. Each figure is a
+// door into its location.
 export default function StatStrip({
   stats,
   setMode,
@@ -31,8 +32,8 @@ export default function StatStrip({
   setMode: (m: Mode) => void;
 }) {
   return (
-    <div className="grid shrink-0 grid-cols-3 gap-2 sm:grid-cols-5 lg:gap-2.5">
-      {TILES.map((t) => {
+    <div className="flex shrink-0 items-stretch justify-center">
+      {TILES.map((t, i) => {
         const value = stats[t.key];
         const hot = t.tone === "amber" && value > 0;
         return (
@@ -40,21 +41,23 @@ export default function StatStrip({
             key={t.key}
             variants={rise}
             onClick={() => setMode(t.mode)}
-            whileTap={{ scale: 0.97 }}
-            className={`glass hud-corners hud-corners-hover tap group px-3 py-2 text-left transition-shadow ${
-              hot ? "glow-amber" : "glow-live"
+            whileTap={{ scale: 0.96 }}
+            className={`group relative px-2.5 py-1.5 text-center sm:px-6 ${
+              i > 0
+                ? "before:absolute before:inset-y-1 before:left-0 before:w-px before:bg-gradient-to-b before:from-transparent before:via-panel-border before:to-transparent"
+                : ""
             }`}
           >
             <StatCounter
               value={value}
-              className={`block text-[24px] font-semibold leading-none lg:text-[28px] ${
+              className={`block text-[26px] font-semibold leading-none transition-transform group-hover:scale-105 lg:text-[30px] ${
                 hot ? "text-amber" : "text-accent"
-              } ${value > 0 ? "text-glow" : ""}`}
+              } ${value > 0 ? (hot ? "" : "text-glow") : "opacity-50"}`}
             />
-            <span className="mt-1 block font-mono text-[9px] uppercase tracking-[0.22em] text-muted">
+            <span className="mt-1.5 block whitespace-nowrap font-mono text-[8.5px] uppercase tracking-[0.24em] text-muted">
               {t.label}
             </span>
-            <span className="block font-mono text-[8px] uppercase tracking-[0.16em] text-faint group-hover:text-muted">
+            <span className="block whitespace-nowrap font-mono text-[7.5px] uppercase tracking-[0.16em] text-faint transition-colors group-hover:text-muted">
               {t.sub}
             </span>
           </motion.button>

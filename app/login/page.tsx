@@ -40,6 +40,25 @@ export default function Login() {
         className="glass hud-corners glow-live anim-flicker-in w-full max-w-sm space-y-4 p-6"
       >
         <div className="space-y-1 text-center">
+          {/* Miniature reactor: two counter-rotating rings over a breathing core. */}
+          <div aria-hidden className="relative mx-auto mb-3 h-16 w-16">
+            <div
+              className="anim-core-breathe absolute inset-1 rounded-full"
+              style={{
+                background:
+                  "radial-gradient(circle, rgba(47,214,255,0.35) 0%, rgba(47,214,255,0.06) 55%, transparent 70%)",
+              }}
+            />
+            <svg viewBox="0 0 64 64" className="absolute inset-0 h-full w-full">
+              <g className="anim-spin-cw" style={{ "--spin-duration": "14s" } as React.CSSProperties}>
+                <circle cx="32" cy="32" r="28" fill="none" stroke="rgba(47,214,255,0.35)" strokeWidth="1.5" strokeDasharray="18 8 4 8" strokeLinecap="round" />
+              </g>
+              <g className="anim-spin-ccw" style={{ "--spin-duration": "9s" } as React.CSSProperties}>
+                <circle cx="32" cy="32" r="20" fill="none" stroke="rgba(139,234,255,0.45)" strokeWidth="1" strokeDasharray="10 6" />
+              </g>
+              <circle cx="32" cy="32" r="3" fill="var(--accent)" className="pulse-dot" />
+            </svg>
+          </div>
           <h1 className="font-mono text-[16px] font-semibold tracking-[0.3em] text-accent text-glow">
             CHASE<span className="text-ink"> OS</span>
           </h1>

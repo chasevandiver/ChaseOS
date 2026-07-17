@@ -46,10 +46,10 @@ export default function ProjectsMode({
   return (
     <div className="flex min-h-0 flex-1 flex-col px-3 pb-3 lg:px-0">
       <Panel
-        title="Project Board"
+        title="Fabrication Grid"
         right={
           <span className="font-mono text-[10px] uppercase tracking-wider text-faint">
-            {visible.length} tracked
+            {visible.length} builds tracked
           </span>
         }
         className="min-h-0 flex-1"

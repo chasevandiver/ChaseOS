@@ -5,11 +5,16 @@ import { useCallback, useEffect, useRef, useState } from "react";
 export const MODES = ["overview", "jobs", "pipeline", "projects"] as const;
 export type Mode = (typeof MODES)[number];
 
-export const MODE_META: Record<Mode, { label: string; glyph: string; key: string }> = {
-  overview: { label: "Overview", glyph: "◉", key: "1" },
-  jobs: { label: "Targets", glyph: "◎", key: "2" },
-  pipeline: { label: "Pipeline", glyph: "≣", key: "3" },
-  projects: { label: "Projects", glyph: "▣", key: "4" },
+// Modes are locations inside CHASE OS. Hash keys stay stable for deep links;
+// only the presented identity changed.
+export const MODE_META: Record<
+  Mode,
+  { label: string; sub: string; glyph: string; key: string }
+> = {
+  overview: { label: "Command Deck", sub: "AI core · overview", glyph: "◉", key: "1" },
+  jobs: { label: "War Room", sub: "target acquisition", glyph: "◎", key: "2" },
+  pipeline: { label: "Mission Control", sub: "active operations", glyph: "≣", key: "3" },
+  projects: { label: "Fabrication Bay", sub: "builds in motion", glyph: "▣", key: "4" },
 };
 
 function modeFromHash(): Mode {

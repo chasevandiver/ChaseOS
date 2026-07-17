@@ -6,11 +6,12 @@ import { AnimatePresence, motion } from "motion/react";
 const KEY = "chaseos:booted";
 
 const LINES = [
-  "> CHASE OS v2.0",
-  "> LINK: NOTION BRIDGE ......... OK",
-  "> RADAR ARRAY ................. ONLINE",
-  "> PIPELINE MONITOR ............ ONLINE",
-  "> PROJECT TELEMETRY ........... ONLINE",
+  "> CHASE OS v3.0 — AI CORE",
+  "> REACTOR ..................... IGNITION",
+  "> NEURAL MESH ................. 10 NODES LINKED",
+  "> NOTION UPLINK ............... SECURED",
+  "> WAR ROOM / MISSION CONTROL .. ONLINE",
+  "> FABRICATION BAY ............. ONLINE",
   "> ALL SYSTEMS NOMINAL",
 ];
 
