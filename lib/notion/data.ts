@@ -25,6 +25,8 @@ export type RadarRole = {
   whyItFits: string;
   link: string | null;
   found: string | null;
+  postedDate: string | null;
+  appliedDate: string | null;
   status: string | null;
   track: string | null;
   tier: TierKey | null;
@@ -67,6 +69,8 @@ function mapRadar(page: NotionPage): RadarRole {
     whyItFits: readText(page, R.whyItFits.name),
     link: readUrl(page, R.link.name),
     found: readDate(page, R.found.name),
+    postedDate: readDate(page, R.postedDate.name),
+    appliedDate: readDate(page, R.appliedDate.name),
     status: readSelect(page, R.status.name),
     track: readSelect(page, R.track.name),
     tier: tierKeyFromLabel(tierLabel),

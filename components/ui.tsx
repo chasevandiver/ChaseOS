@@ -1,22 +1,5 @@
 "use client";
 
-export function PanelHeader({
-  title,
-  right,
-}: {
-  title: string;
-  right?: React.ReactNode;
-}) {
-  return (
-    <div className="flex items-center justify-between px-4 pt-3 pb-2">
-      <h2 className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
-        {title}
-      </h2>
-      {right}
-    </div>
-  );
-}
-
 export function Skeleton({ className = "" }: { className?: string }) {
   return <div className={`skeleton ${className}`} />;
 }
@@ -37,33 +20,6 @@ export function ErrorState({ error, source }: { error: string; source?: string }
         {error}
       </p>
     </div>
-  );
-}
-
-const PILL_COLORS: Record<string, string> = {
-  Active: "text-accent border-accent/40",
-  Building: "text-accent border-accent/40",
-  Applied: "text-emerald-300 border-emerald-300/30",
-  "Recruiter Screen": "text-sky-300 border-sky-300/30",
-  Interviewing: "text-violet-300 border-violet-300/30",
-  "Final Round": "text-amber border-amber/40",
-  Offer: "text-emerald-300 border-emerald-300/30",
-  Closed: "text-faint border-panel-border",
-  Paused: "text-faint border-panel-border",
-  Idea: "text-muted border-panel-border",
-  New: "text-accent border-accent/40",
-  Sales: "text-sky-300 border-sky-300/30",
-  Marketing: "text-violet-300 border-violet-300/30",
-};
-
-export function Pill({ label }: { label: string }) {
-  const color = PILL_COLORS[label] ?? "text-muted border-panel-border";
-  return (
-    <span
-      className={`inline-block rounded-full border px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider ${color}`}
-    >
-      {label}
-    </span>
   );
 }
 
