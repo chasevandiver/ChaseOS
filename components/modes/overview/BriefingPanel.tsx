@@ -1,10 +1,11 @@
 "use client";
 
-import { motion } from "motion/react";
+import { useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
+import { Maximize2, X } from "lucide-react";
 import type { Briefing, BriefingBlock } from "@/lib/notion/briefing";
 import type { Slice } from "@/lib/client/useDashboard";
-import { ErrorState, Skeleton } from "@/components/ui";
-import Panel from "@/components/hud/Panel";
+import { Skeleton } from "@/components/ui";
 
 function formatUpdated(iso: string): string {
   const d = new Date(iso);
@@ -85,50 +86,125 @@ function Block({ block, index }: { block: BriefingBlock; index: number }) {
   }
 }
 
-// The overview hero: today's briefing, blocks cascading in.
-export default function BriefingPanel({ briefing }: { briefing: Slice<Briefing> }) {
-  let counter = 0;
+// Full briefing body — used by the expanded overlay.
+export function BriefingBody({ briefing }: { briefing: Briefing }) {
+  // Number list items: an item's index is its position within its run of
+  // consecutive numbered items. Briefings are small, so the scan is cheap.
+  const numbered = briefing.blocks.map((b, i) => {
+    if (b.type !== "numbered_list_item") return { block: b, index: 0 };
+    let start = i;
+    while (start > 0 && briefing.blocks[start - 1].type === "numbered_list_item") start--;
+    return { block: b, index: i - start + 1 };
+  });
+  return (
+    <div className="space-y-1.5">
+      {numbered.map(({ block, index }, i) => (
+        <motion.div
+          key={block.id}
+          initial={{ opacity: 0, y: 5 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: Math.min(i * 0.04, 0.4), duration: 0.25 }}
+        >
+          <Block block={block} index={index} />
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+
+function summarize(briefing: Briefing): string {
+  // First few lines of real prose, compressed into one intelligence line.
+  const texts = briefing.blocks
+    .filter((b) => b.type !== "heading_3")
+    .map((b) => b.spans.map((s) => s.text).join("").trim())
+    .filter(Boolean);
+  return texts.slice(0, 2).join(" · ");
+}
+
+// Condensed intel readout for the Command Deck: one smart summary line,
+// expandable to the full briefing in a floating holographic overlay.
+export default function IntelBriefing({ briefing }: { briefing: Slice<Briefing> }) {
+  const [open, setOpen] = useState(false);
+  const hasContent = Boolean(briefing.data && briefing.data.blocks.length > 0);
 
   return (
-    <Panel
-      title="Daily Briefing"
-      right={
-        briefing.data ? (
-          <span className="font-mono text-[10px] uppercase tracking-wider text-faint">
-            Updated {formatUpdated(briefing.data.lastEdited)}
+    <>
+      <button
+        onClick={() => hasContent && setOpen(true)}
+        disabled={!hasContent}
+        className="group block w-full text-left"
+        aria-label="Expand daily briefing"
+      >
+        <div className="flex items-center justify-between gap-3">
+          <h2 className="font-mono text-[9px] uppercase tracking-[0.28em] text-faint">
+            <span className="mr-1.5 text-accent/60">▸</span>
+            Intel Briefing
+          </h2>
+          <span className="flex items-center gap-2 font-mono text-[8px] uppercase tracking-[0.18em] text-faint/70">
+            {briefing.data && formatUpdated(briefing.data.lastEdited)}
+            {hasContent && (
+              <Maximize2
+                size={10}
+                className="text-faint transition-colors group-hover:text-accent"
+              />
+            )}
           </span>
-        ) : undefined
-      }
-      className="min-h-0 flex-1"
-    >
-      <div className="min-h-0 flex-1 space-y-1.5 overflow-y-auto px-4 pb-4">
-        {briefing.loading && (
-          <div className="space-y-2">
-            <Skeleton className="h-4 w-3/4" />
-            <Skeleton className="h-4 w-1/2" />
-            <Skeleton className="h-4 w-2/3" />
-          </div>
+        </div>
+        <hr className="holo-rule mt-1.5 mb-2" />
+        {briefing.loading && <Skeleton className="h-4 w-3/4" />}
+        {briefing.error && !briefing.loading && (
+          <p className="text-[12px] text-danger">{briefing.error}</p>
         )}
-        {briefing.error && !briefing.loading && <ErrorState error={briefing.error} />}
-        {briefing.data && briefing.data.blocks.length === 0 && !briefing.loading && (
-          <p className="text-sm text-faint">
-            No briefing yet. It lands on the Command Center page each weekday morning.
+        {briefing.data && !hasContent && !briefing.loading && (
+          <p className="text-[12px] text-faint">
+            No briefing yet — it lands each weekday morning.
           </p>
         )}
-        {briefing.data?.blocks.map((b, i) => {
-          counter = b.type === "numbered_list_item" ? counter + 1 : 0;
-          return (
+        {hasContent && (
+          <p className="line-clamp-2 text-[12.5px] leading-relaxed text-muted transition-colors group-hover:text-ink">
+            {summarize(briefing.data!)}
+          </p>
+        )}
+      </button>
+
+      {/* Expanded overlay: the full decrypted briefing. */}
+      <AnimatePresence>
+        {open && briefing.data && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0.18 } }}
+            className="fixed inset-0 z-40 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+            onClick={() => setOpen(false)}
+          >
             <motion.div
-              key={b.id}
-              initial={{ opacity: 0, y: 5 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: Math.min(i * 0.05, 0.5), duration: 0.25 }}
+              initial={{ opacity: 0, scale: 0.96, y: 12 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.97, y: 8, transition: { duration: 0.18 } }}
+              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+              onClick={(e) => e.stopPropagation()}
+              className="glass hud-corners glow-active flex max-h-[82dvh] w-full max-w-2xl flex-col"
             >
-              <Block block={b} index={counter} />
+              <div className="flex items-center justify-between px-5 pt-4 pb-2">
+                <h2 className="font-mono text-[11px] uppercase tracking-[0.26em] text-accent text-glow">
+                  ▸ Daily Briefing — Decrypted
+                </h2>
+                <button
+                  onClick={() => setOpen(false)}
+                  aria-label="Close briefing"
+                  className="tap flex items-center justify-center rounded-lg text-faint transition-colors hover:text-accent"
+                >
+                  <X size={15} />
+                </button>
+              </div>
+              <hr className="holo-rule mx-5" />
+              <div className="min-h-0 flex-1 overflow-y-auto px-5 py-4">
+                <BriefingBody briefing={briefing.data} />
+              </div>
             </motion.div>
-          );
-        })}
-      </div>
-    </Panel>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

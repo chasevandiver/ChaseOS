@@ -1,29 +1,36 @@
 @import "tailwindcss";
 
+/* ────────────────────────────────────────────────────────────────────
+   CHASE OS design tokens — holographic command-center language.
+   Near-black depth stack, cyan volumetric accent, violet used sparingly.
+   ──────────────────────────────────────────────────────────────────── */
 :root {
-  --bg: #05080d;
-  --bg-raised: #0a111a;
-  --panel: rgba(148, 197, 255, 0.045);
-  --panel-border: rgba(148, 197, 255, 0.1);
-  --text: #dbe6f0;
-  --text-muted: #7d8b99;
-  --text-faint: #55626f;
-  --accent: #38dcff;
-  --accent-dim: rgba(56, 220, 255, 0.14);
+  --bg: #020409;
+  --bg-raised: #060b13;
+  --panel: rgba(140, 200, 255, 0.028);
+  --panel-strong: rgba(140, 200, 255, 0.05);
+  --panel-border: rgba(140, 200, 255, 0.08);
+  --text: #d9e6f2;
+  --text-muted: #7f8fa1;
+  --text-faint: #4d5b6b;
+  --accent: #2fd6ff;
+  --accent-bright: #8beaff;
+  --accent-dim: rgba(47, 214, 255, 0.12);
+  --violet: #a78bfa;
+  --violet-dim: rgba(167, 139, 250, 0.12);
   --amber: #fbbf24;
   --amber-dim: rgba(251, 191, 36, 0.12);
   --danger: #f87171;
   --success: #34d399;
-  --violet: #a78bfa;
   --sky: #7dd3fc;
-  --accent-bright: #7ee8ff;
-  --grid-line: rgba(148, 197, 255, 0.035);
+  --grid-line: rgba(140, 200, 255, 0.03);
 }
 
 @theme inline {
   --color-bg: var(--bg);
   --color-bg-raised: var(--bg-raised);
   --color-panel: var(--panel);
+  --color-panel-strong: var(--panel-strong);
   --color-panel-border: var(--panel-border);
   --color-ink: var(--text);
   --color-muted: var(--text-muted);
@@ -35,6 +42,7 @@
   --color-danger: var(--danger);
   --color-success: var(--success);
   --color-violet: var(--violet);
+  --color-violet-dim: var(--violet-dim);
   --color-sky: var(--sky);
   --color-accent-bright: var(--accent-bright);
   --font-sans: var(--font-geist-sans);
@@ -47,9 +55,11 @@ html {
 }
 
 body {
+  /* Volumetric light wells: one from high orbit, one violet from below. */
   background:
-    radial-gradient(1200px 500px at 70% -10%, rgba(56, 220, 255, 0.06), transparent 60%),
-    radial-gradient(900px 400px at 10% 110%, rgba(56, 220, 255, 0.04), transparent 60%),
+    radial-gradient(1400px 600px at 50% -15%, rgba(47, 214, 255, 0.055), transparent 62%),
+    radial-gradient(1000px 500px at 85% 108%, rgba(167, 139, 250, 0.035), transparent 60%),
+    radial-gradient(800px 400px at 8% 100%, rgba(47, 214, 255, 0.028), transparent 60%),
     var(--bg);
   color: var(--text);
   font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
@@ -67,25 +77,52 @@ body {
   padding-bottom: env(safe-area-inset-bottom);
 }
 
-/* Glass panel */
+/* ── Surfaces ───────────────────────────────────────────────────────
+   `glass` is now a floating holographic plate: near-invisible fill,
+   hairline light edge on top, no heavy borders. */
 .glass {
-  background: var(--panel);
+  background: linear-gradient(
+    180deg,
+    var(--panel-strong) 0%,
+    var(--panel) 34%,
+    rgba(140, 200, 255, 0.012) 100%
+  );
   border: 1px solid var(--panel-border);
-  border-radius: 14px;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  border-top-color: rgba(140, 200, 255, 0.16);
+  border-radius: 16px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* Thin holographic divider — the standard section separator. */
+.holo-rule {
+  height: 1px;
+  border: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(47, 214, 255, 0.35) 18%,
+    rgba(47, 214, 255, 0.12) 55%,
+    transparent
+  );
 }
 
 /* Subtle glow on live data */
 .glow-live {
-  box-shadow: 0 0 18px rgba(56, 220, 255, 0.07), inset 0 0 24px rgba(56, 220, 255, 0.03);
+  box-shadow: 0 0 24px rgba(47, 214, 255, 0.05), inset 0 0 32px rgba(47, 214, 255, 0.02);
 }
 .glow-amber {
-  border-color: rgba(251, 191, 36, 0.35);
-  box-shadow: 0 0 16px rgba(251, 191, 36, 0.12), inset 0 0 20px rgba(251, 191, 36, 0.05);
+  border-color: rgba(251, 191, 36, 0.3);
+  box-shadow: 0 0 16px rgba(251, 191, 36, 0.1), inset 0 0 20px rgba(251, 191, 36, 0.04);
 }
 .text-glow {
-  text-shadow: 0 0 12px rgba(56, 220, 255, 0.45);
+  text-shadow: 0 0 12px rgba(47, 214, 255, 0.45);
+}
+.text-glow-bright {
+  text-shadow: 0 0 6px rgba(139, 234, 255, 0.9), 0 0 18px rgba(47, 214, 255, 0.5);
+}
+.text-glow-violet {
+  text-shadow: 0 0 12px rgba(167, 139, 250, 0.5);
 }
 
 /* Live indicator pulse */
@@ -106,9 +143,9 @@ body {
   border-radius: 8px;
   background: linear-gradient(
     90deg,
-    rgba(148, 197, 255, 0.05) 25%,
-    rgba(148, 197, 255, 0.11) 50%,
-    rgba(148, 197, 255, 0.05) 75%
+    rgba(140, 200, 255, 0.04) 25%,
+    rgba(140, 200, 255, 0.09) 50%,
+    rgba(140, 200, 255, 0.04) 75%
   );
   background-size: 600px 100%;
   animation: shimmer 1.6s linear infinite;
@@ -131,37 +168,39 @@ input, textarea, select {
 /* Thin scrollbars, cockpit style */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(148, 197, 255, 0.15) transparent;
+  scrollbar-color: rgba(140, 200, 255, 0.14) transparent;
 }
 *::-webkit-scrollbar {
   width: 4px;
   height: 4px;
 }
 *::-webkit-scrollbar-thumb {
-  background: rgba(148, 197, 255, 0.15);
+  background: rgba(140, 200, 255, 0.14);
   border-radius: 2px;
 }
 
 ::selection {
-  background: rgba(56, 220, 255, 0.25);
+  background: rgba(47, 214, 255, 0.25);
 }
 
-/* ── HUD atmosphere ─────────────────────────────────────────────── */
+/* ── Atmosphere ─────────────────────────────────────────────────── */
 
 /* Faint blueprint grid, sits behind everything. */
 .grid-bg {
   background-image:
     linear-gradient(var(--grid-line) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  background-size: 48px 48px;
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 110% 90% at 50% 40%, black 30%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 110% 90% at 50% 40%, black 30%, transparent 100%);
 }
 
 /* CRT scanlines at whisper volume. */
 .scanlines {
   background: repeating-linear-gradient(
     0deg,
-    rgba(148, 197, 255, 0.025) 0px,
-    rgba(148, 197, 255, 0.025) 1px,
+    rgba(140, 200, 255, 0.018) 0px,
+    rgba(140, 200, 255, 0.018) 1px,
     transparent 1px,
     transparent 3px
   );
@@ -172,11 +211,11 @@ input, textarea, select {
   background: radial-gradient(
     ellipse 120% 90% at 50% 45%,
     transparent 55%,
-    rgba(0, 0, 0, 0.35) 100%
+    rgba(0, 0, 0, 0.4) 100%
   );
 }
 
-/* Corner brackets: targeting-reticle framing for panels. */
+/* Corner brackets: targeting-reticle framing for interactive plates. */
 .hud-corners {
   position: relative;
 }
@@ -184,9 +223,9 @@ input, textarea, select {
 .hud-corners::after {
   content: "";
   position: absolute;
-  width: 14px;
-  height: 14px;
-  border-color: rgba(56, 220, 255, 0.35);
+  width: 12px;
+  height: 12px;
+  border-color: rgba(47, 214, 255, 0.28);
   border-style: solid;
   pointer-events: none;
   transition: border-color 0.2s ease, width 0.2s ease, height 0.2s ease;
@@ -207,24 +246,57 @@ input, textarea, select {
 .hud-corners-hover:hover::after,
 .hud-corners-active::before,
 .hud-corners-active::after {
-  border-color: rgba(56, 220, 255, 0.8);
-  width: 22px;
-  height: 22px;
+  border-color: rgba(47, 214, 255, 0.75);
+  width: 20px;
+  height: 20px;
 }
 
-.text-glow-bright {
-  text-shadow: 0 0 6px rgba(126, 232, 255, 0.9), 0 0 18px rgba(56, 220, 255, 0.5);
-}
-
-/* Stronger glow for the selected/active panel. */
+/* Stronger glow for the selected/active plate. */
 .glow-active {
-  border-color: rgba(56, 220, 255, 0.4);
-  box-shadow: 0 0 22px rgba(56, 220, 255, 0.16), inset 0 0 28px rgba(56, 220, 255, 0.05);
+  border-color: rgba(47, 214, 255, 0.35);
+  box-shadow: 0 0 26px rgba(47, 214, 255, 0.14), inset 0 0 30px rgba(47, 214, 255, 0.04);
 }
 
-/* ── HUD keyframes ──────────────────────────────────────────────── */
+/* Hover lighting: a soft light source follows interactive plates. */
+.hover-light {
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.hover-light:hover {
+  border-color: rgba(47, 214, 255, 0.22);
+  box-shadow: 0 0 30px rgba(47, 214, 255, 0.1), inset 0 0 34px rgba(47, 214, 255, 0.035);
+}
 
-/* Radar arc rotation (pull-to-refresh, CSS fallback sweep). */
+/* ── Keyframes ──────────────────────────────────────────────────── */
+
+/* Ring rotation for the AI Core; speed set inline per ring. */
+@keyframes spin-cw {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes spin-ccw {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+.anim-spin-cw {
+  animation: spin-cw var(--spin-duration, 24s) linear infinite;
+  transform-origin: center;
+}
+.anim-spin-ccw {
+  animation: spin-ccw var(--spin-duration, 36s) linear infinite;
+  transform-origin: center;
+}
+
+/* Reactor breathing: the core's volumetric glow swells and settles. */
+@keyframes core-breathe {
+  0%, 100% { opacity: 0.55; transform: scale(0.97); }
+  50% { opacity: 1; transform: scale(1.03); }
+}
+.anim-core-breathe {
+  animation: core-breathe 4.5s ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* Radar arc rotation (refresh spinners, sweeps). */
 @keyframes sweep {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
@@ -255,7 +327,7 @@ input, textarea, select {
   animation: flicker-in 0.5s ease-out both;
 }
 
-/* Boot-sequence terminal cursor. */
+/* Terminal cursor. */
 @keyframes blink-caret {
   0%, 49% { opacity: 1; }
   50%, 100% { opacity: 0; }
@@ -266,7 +338,7 @@ input, textarea, select {
 
 /* Quick accent pulse when a readout changes. */
 @keyframes stat-flash {
-  0% { background-color: rgba(56, 220, 255, 0.22); }
+  0% { background-color: rgba(47, 214, 255, 0.22); }
   100% { background-color: transparent; }
 }
 .anim-stat-flash {
@@ -283,6 +355,20 @@ input, textarea, select {
   animation: line-wipe 0.5s ease-out both;
 }
 
+/* Slow vertical float for holographic plates. */
+@keyframes holo-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+}
+.anim-holo-float {
+  animation: holo-float 7s ease-in-out infinite;
+}
+
+/* Telemetry bar micro-jitter is done in JS; this eases the width. */
+.telemetry-bar {
+  transition: width 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .pulse-dot,
   .skeleton,
@@ -291,7 +377,11 @@ input, textarea, select {
   .anim-flicker-in,
   .anim-blink-caret,
   .anim-stat-flash,
-  .anim-line-wipe {
+  .anim-line-wipe,
+  .anim-spin-cw,
+  .anim-spin-ccw,
+  .anim-core-breathe,
+  .anim-holo-float {
     animation: none !important;
   }
 }

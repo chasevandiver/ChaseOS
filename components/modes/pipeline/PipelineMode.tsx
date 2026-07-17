@@ -44,10 +44,10 @@ export default function PipelineMode({
   return (
     <div className="flex min-h-0 flex-1 flex-col px-3 pb-3 lg:px-0">
       <Panel
-        title="Application Pipeline"
+        title="Active Missions"
         right={
           <span className="font-mono text-[10px] uppercase tracking-wider text-faint">
-            {open.length} open
+            {open.length} in flight
           </span>
         }
         className="min-h-0 flex-1"
