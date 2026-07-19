@@ -960,6 +960,812 @@
           "procore"
         ]
       }
+    },
+    {
+      "name": "Stripe",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "stripe",
+      "candidates": {
+        "greenhouse": [
+          "stripe"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Plaid",
+      "target": false,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "plaid"
+        ],
+        "lever": [
+          "plaid"
+        ]
+      }
+    },
+    {
+      "name": "Affirm",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "affirm",
+      "candidates": {
+        "greenhouse": [
+          "affirm"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "BILL",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "billcom",
+      "candidates": {
+        "greenhouse": [
+          "bill",
+          "billcom"
+        ],
+        "lever": [
+          "bill"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Adyen",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "adyen",
+      "candidates": {
+        "greenhouse": [
+          "adyen"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Airwallex",
+      "target": false,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "airwallex"
+        ],
+        "lever": [
+          "airwallex"
+        ]
+      }
+    },
+    {
+      "name": "Checkr",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "checkr",
+      "candidates": {
+        "greenhouse": [
+          "checkr"
+        ],
+        "lever": [
+          "checkr"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Navan",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "tripactions",
+      "candidates": {
+        "greenhouse": [
+          "tripactions",
+          "navan"
+        ],
+        "lever": [
+          "navan"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Melio",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "melio",
+      "candidates": {
+        "greenhouse": [
+          "melio"
+        ],
+        "lever": [
+          "melio"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Mercury",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "mercury",
+      "candidates": {
+        "greenhouse": [
+          "mercury"
+        ],
+        "lever": [
+          "mercury"
+        ],
+        "ashby": [
+          "mercury"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Ethos",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "ethoslife",
+      "candidates": {
+        "greenhouse": [
+          "ethoslife",
+          "ethos"
+        ],
+        "lever": [
+          "ethos"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Pie Insurance",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "pieinsurance",
+      "candidates": {
+        "greenhouse": [
+          "pieinsurance"
+        ],
+        "lever": [
+          "pieinsurance"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Remote.com",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "remotecom",
+      "candidates": {
+        "greenhouse": [
+          "remotecom",
+          "remote"
+        ],
+        "lever": [
+          "remote"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Oyster",
+      "target": false,
+      "verified": true,
+      "ats": "ashby",
+      "slug": "oyster",
+      "candidates": {
+        "greenhouse": [
+          "oysterhr",
+          "oyster"
+        ],
+        "lever": [
+          "oysterhr"
+        ],
+        "ashby": [
+          "oyster"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Justworks",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "justworks",
+      "candidates": {
+        "greenhouse": [
+          "justworks"
+        ],
+        "lever": [
+          "justworks"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "BambooHR",
+      "target": false,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "bamboohr"
+        ],
+        "lever": [
+          "bamboohr"
+        ]
+      }
+    },
+    {
+      "name": "Velocity Global",
+      "target": false,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "velocityglobal"
+        ],
+        "lever": [
+          "velocityglobal"
+        ]
+      }
+    },
+    {
+      "name": "Wiz",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "wizinc",
+      "candidates": {
+        "greenhouse": [
+          "wizinc",
+          "wiz"
+        ],
+        "lever": [
+          "wiz"
+        ],
+        "ashby": [
+          "wiz"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Snyk",
+      "target": false,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "snyk"
+        ],
+        "lever": [
+          "snyk"
+        ]
+      }
+    },
+    {
+      "name": "Abnormal Security",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "abnormalsecurity",
+      "candidates": {
+        "greenhouse": [
+          "abnormalsecurity"
+        ],
+        "lever": [
+          "abnormalsecurity"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Huntress",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "huntress",
+      "candidates": {
+        "greenhouse": [
+          "huntress"
+        ],
+        "lever": [
+          "huntress"
+        ],
+        "ashby": [
+          "huntress"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "SentinelOne",
+      "target": false,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "sentinelone"
+        ],
+        "lever": [
+          "sentinelone"
+        ]
+      }
+    },
+    {
+      "name": "Drata",
+      "target": false,
+      "verified": true,
+      "ats": "ashby",
+      "slug": "drata",
+      "candidates": {
+        "greenhouse": [
+          "drata"
+        ],
+        "lever": [
+          "drata"
+        ],
+        "ashby": [
+          "drata"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Orca Security",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "orcasecurity",
+      "candidates": {
+        "greenhouse": [
+          "orcasecurity"
+        ],
+        "lever": [
+          "orcasecurity"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Datadog",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "datadog",
+      "candidates": {
+        "greenhouse": [
+          "datadog"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "MongoDB",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "mongodb",
+      "candidates": {
+        "greenhouse": [
+          "mongodb"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "GitLab",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "gitlab",
+      "candidates": {
+        "greenhouse": [
+          "gitlab"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Elastic",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "elastic",
+      "candidates": {
+        "greenhouse": [
+          "elastic"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Confluent",
+      "target": false,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "confluent"
+        ]
+      }
+    },
+    {
+      "name": "Databricks",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "databricks",
+      "candidates": {
+        "greenhouse": [
+          "databricks"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Cloudflare",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "cloudflare",
+      "candidates": {
+        "greenhouse": [
+          "cloudflare"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "HashiCorp",
+      "target": false,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "hashicorp"
+        ]
+      }
+    },
+    {
+      "name": "Grafana Labs",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "grafanalabs",
+      "candidates": {
+        "greenhouse": [
+          "grafanalabs"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Retool",
+      "target": false,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "retool"
+        ],
+        "ashby": [
+          "retool"
+        ]
+      }
+    },
+    {
+      "name": "Vercel",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "vercel",
+      "candidates": {
+        "greenhouse": [
+          "vercel"
+        ],
+        "ashby": [
+          "vercel"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Docker",
+      "target": false,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "docker"
+        ],
+        "lever": [
+          "docker"
+        ]
+      }
+    },
+    {
+      "name": "1Password",
+      "target": false,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "1password"
+        ],
+        "lever": [
+          "1password"
+        ]
+      }
+    },
+    {
+      "name": "Figma",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "figma",
+      "candidates": {
+        "greenhouse": [
+          "figma"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Canva",
+      "target": false,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "canva"
+        ],
+        "lever": [
+          "canva"
+        ]
+      }
+    },
+    {
+      "name": "Atlassian",
+      "target": false,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "atlassian"
+        ],
+        "lever": [
+          "atlassian"
+        ]
+      }
+    },
+    {
+      "name": "Spring Health",
+      "target": false,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "springhealth"
+        ],
+        "lever": [
+          "springhealth"
+        ]
+      }
+    },
+    {
+      "name": "Headway",
+      "target": false,
+      "verified": true,
+      "ats": "ashby",
+      "slug": "headway",
+      "candidates": {
+        "greenhouse": [
+          "headway"
+        ],
+        "lever": [
+          "headway"
+        ],
+        "ashby": [
+          "headway"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Lyra Health",
+      "target": false,
+      "verified": true,
+      "ats": "lever",
+      "slug": "lyrahealth",
+      "candidates": {
+        "greenhouse": [
+          "lyrahealth"
+        ],
+        "lever": [
+          "lyrahealth"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Hinge Health",
+      "target": false,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "hingehealth"
+        ],
+        "lever": [
+          "hingehealth"
+        ]
+      }
+    },
+    {
+      "name": "Included Health",
+      "target": false,
+      "verified": true,
+      "ats": "lever",
+      "slug": "includedhealth",
+      "candidates": {
+        "greenhouse": [
+          "includedhealth"
+        ],
+        "lever": [
+          "includedhealth"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Olo",
+      "target": false,
+      "verified": true,
+      "ats": "lever",
+      "slug": "olo",
+      "candidates": {
+        "greenhouse": [
+          "olo"
+        ],
+        "lever": [
+          "olo"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Ironclad",
+      "target": false,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "ironclad"
+        ],
+        "lever": [
+          "ironclad"
+        ],
+        "ashby": [
+          "ironclad"
+        ]
+      }
+    },
+    {
+      "name": "Clio",
+      "target": false,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "clio"
+        ],
+        "lever": [
+          "clio"
+        ]
+      }
+    },
+    {
+      "name": "Flexport",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "flexport",
+      "candidates": {
+        "greenhouse": [
+          "flexport"
+        ],
+        "lever": [
+          "flexport"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Motive",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "gomotive",
+      "candidates": {
+        "greenhouse": [
+          "gomotive",
+          "motive"
+        ],
+        "lever": [
+          "motive"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "EliseAI",
+      "target": false,
+      "verified": true,
+      "ats": "ashby",
+      "slug": "eliseai",
+      "candidates": {
+        "greenhouse": [
+          "eliseai"
+        ],
+        "lever": [
+          "eliseai"
+        ],
+        "ashby": [
+          "eliseai"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Birdeye",
+      "target": false,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "birdeye"
+        ],
+        "lever": [
+          "birdeye"
+        ]
+      }
     }
   ],
   "notes": {
