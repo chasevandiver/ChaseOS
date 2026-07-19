@@ -1,0 +1,31 @@
+{
+  "_readme": [
+    "Companies the ATS puller watches. Every entry starts unverified.",
+    "Run `node scripts/verify-slugs.mjs` to probe the candidate slugs against",
+    "the live ATS APIs. The puller REFUSES to use any entry where",
+    "verified != true, so a wrong guess can never produce a fake job row.",
+    "candidates are best-effort starting guesses across the four ATS types.",
+    "Add any company you meet: append an entry with candidates and re-verify."
+  ],
+  "companies": [
+    { "name": "HubSpot", "target": true, "verified": false, "ats": null, "slug": null,
+      "candidates": { "greenhouse": ["hubspotjobs", "hubspot"], "lever": ["hubspot"], "ashby": ["hubspot"], "workable": ["hubspot"] } },
+    { "name": "Klaviyo", "target": true, "verified": false, "ats": null, "slug": null,
+      "candidates": { "greenhouse": ["klaviyo"], "lever": ["klaviyo"], "ashby": ["klaviyo"], "workable": ["klaviyo"] } },
+    { "name": "Cvent", "target": true, "verified": false, "ats": null, "slug": null,
+      "candidates": { "greenhouse": ["cvent"], "lever": ["cvent"], "ashby": ["cvent"], "workable": ["cvent"] } },
+    { "name": "Optimizely", "target": true, "verified": false, "ats": null, "slug": null,
+      "candidates": { "greenhouse": ["optimizely"], "lever": ["optimizely"], "ashby": ["optimizely"], "workable": ["optimizely"] } },
+    { "name": "Semrush", "target": true, "verified": false, "ats": null, "slug": null,
+      "candidates": { "greenhouse": ["semrush"], "lever": ["semrush"], "ashby": ["semrush"], "workable": ["semrush"] } },
+    { "name": "Sprout Social", "target": true, "verified": false, "ats": null, "slug": null,
+      "candidates": { "greenhouse": ["sproutsocial"], "lever": ["sproutsocial"], "ashby": ["sprout-social", "sproutsocial"], "workable": ["sproutsocial"] } },
+    { "name": "Constant Contact", "target": true, "verified": false, "ats": null, "slug": null,
+      "candidates": { "greenhouse": ["constantcontact"], "lever": ["constantcontact"], "ashby": ["constant-contact", "constantcontact"], "workable": ["constantcontact"] } },
+    { "name": "Braze", "target": true, "verified": false, "ats": null, "slug": null,
+      "candidates": { "greenhouse": ["braze"], "lever": ["braze"], "ashby": ["braze"], "workable": ["braze"] } }
+  ],
+  "notes": {
+    "gartner": "Gartner (BDE, Irving TX) runs on Workday, which has no public JSON board API in this set. Keep Gartner in the deep sweep chat workflow, or add a Workday puller later if it becomes the bottleneck."
+  }
+}
