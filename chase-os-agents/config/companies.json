@@ -8,22 +8,182 @@
     "Add any company you meet: append an entry with candidates and re-verify."
   ],
   "companies": [
-    { "name": "HubSpot", "target": true, "verified": false, "ats": null, "slug": null,
-      "candidates": { "greenhouse": ["hubspotjobs", "hubspot"], "lever": ["hubspot"], "ashby": ["hubspot"], "workable": ["hubspot"] } },
-    { "name": "Klaviyo", "target": true, "verified": false, "ats": null, "slug": null,
-      "candidates": { "greenhouse": ["klaviyo"], "lever": ["klaviyo"], "ashby": ["klaviyo"], "workable": ["klaviyo"] } },
-    { "name": "Cvent", "target": true, "verified": false, "ats": null, "slug": null,
-      "candidates": { "greenhouse": ["cvent"], "lever": ["cvent"], "ashby": ["cvent"], "workable": ["cvent"] } },
-    { "name": "Optimizely", "target": true, "verified": false, "ats": null, "slug": null,
-      "candidates": { "greenhouse": ["optimizely"], "lever": ["optimizely"], "ashby": ["optimizely"], "workable": ["optimizely"] } },
-    { "name": "Semrush", "target": true, "verified": false, "ats": null, "slug": null,
-      "candidates": { "greenhouse": ["semrush"], "lever": ["semrush"], "ashby": ["semrush"], "workable": ["semrush"] } },
-    { "name": "Sprout Social", "target": true, "verified": false, "ats": null, "slug": null,
-      "candidates": { "greenhouse": ["sproutsocial"], "lever": ["sproutsocial"], "ashby": ["sprout-social", "sproutsocial"], "workable": ["sproutsocial"] } },
-    { "name": "Constant Contact", "target": true, "verified": false, "ats": null, "slug": null,
-      "candidates": { "greenhouse": ["constantcontact"], "lever": ["constantcontact"], "ashby": ["constant-contact", "constantcontact"], "workable": ["constantcontact"] } },
-    { "name": "Braze", "target": true, "verified": false, "ats": null, "slug": null,
-      "candidates": { "greenhouse": ["braze"], "lever": ["braze"], "ashby": ["braze"], "workable": ["braze"] } }
+    {
+      "name": "HubSpot",
+      "target": true,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "hubspotjobs",
+      "candidates": {
+        "greenhouse": [
+          "hubspotjobs",
+          "hubspot"
+        ],
+        "lever": [
+          "hubspot"
+        ],
+        "ashby": [
+          "hubspot"
+        ],
+        "workable": [
+          "hubspot"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Klaviyo",
+      "target": true,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "klaviyo",
+      "candidates": {
+        "greenhouse": [
+          "klaviyo"
+        ],
+        "lever": [
+          "klaviyo"
+        ],
+        "ashby": [
+          "klaviyo"
+        ],
+        "workable": [
+          "klaviyo"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Cvent",
+      "target": true,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "cvent"
+        ],
+        "lever": [
+          "cvent"
+        ],
+        "ashby": [
+          "cvent"
+        ],
+        "workable": [
+          "cvent"
+        ]
+      }
+    },
+    {
+      "name": "Optimizely",
+      "target": true,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "optimizely"
+        ],
+        "lever": [
+          "optimizely"
+        ],
+        "ashby": [
+          "optimizely"
+        ],
+        "workable": [
+          "optimizely"
+        ]
+      }
+    },
+    {
+      "name": "Semrush",
+      "target": true,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "semrush"
+        ],
+        "lever": [
+          "semrush"
+        ],
+        "ashby": [
+          "semrush"
+        ],
+        "workable": [
+          "semrush"
+        ]
+      }
+    },
+    {
+      "name": "Sprout Social",
+      "target": true,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "sproutsocial",
+      "candidates": {
+        "greenhouse": [
+          "sproutsocial"
+        ],
+        "lever": [
+          "sproutsocial"
+        ],
+        "ashby": [
+          "sprout-social",
+          "sproutsocial"
+        ],
+        "workable": [
+          "sproutsocial"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Constant Contact",
+      "target": true,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "constantcontact",
+      "candidates": {
+        "greenhouse": [
+          "constantcontact"
+        ],
+        "lever": [
+          "constantcontact"
+        ],
+        "ashby": [
+          "constant-contact",
+          "constantcontact"
+        ],
+        "workable": [
+          "constantcontact"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Braze",
+      "target": true,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "braze",
+      "candidates": {
+        "greenhouse": [
+          "braze"
+        ],
+        "lever": [
+          "braze"
+        ],
+        "ashby": [
+          "braze"
+        ],
+        "workable": [
+          "braze"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    }
   ],
   "notes": {
     "gartner": "Gartner (BDE, Irving TX) runs on Workday, which has no public JSON board API in this set. Keep Gartner in the deep sweep chat workflow, or add a Workday puller later if it becomes the bottleneck."
