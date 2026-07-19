@@ -34,11 +34,17 @@ export function checkFreshness(postedDate, profile) {
 
 export function checkLocation(job, profile) {
   const loc = (job.location ?? "").toLowerCase();
-  const desc = (job.description ?? "").toLowerCase();
-  const remote =
-    job.remote === true ||
-    /\bremote\b/.test(loc) ||
-    /(fully remote|remote[- ]first|work from anywhere|us[- ]remote|remote \(us\))/.test(desc);
+  // Remote must come from the ATS's own signals, and they must agree. The
+  // location field saying "remote" is definitive. The structured remote flag
+  // (Ashby/Workable) alone is not: companies set it on hybrid office roles,
+  // so it only counts when the location is country-level ("United States",
+  // empty). If the location names specific cities and never says remote,
+  // the cities are the claim we can verify - they go through the DFW check.
+  // Description text is never trusted; "we are a remote-first company"
+  // boilerplate says nothing about where THIS role sits.
+  const locSaysRemote = /\bremote\b|work from anywhere/.test(loc);
+  const countryLevel = loc.trim() === "" || /^(united states|usa|u\.s\.|us|north america|amer|americas)$/.test(loc.trim());
+  const remote = locSaysRemote || (job.remote === true && countryLevel);
   if (remote) {
     // Remote only counts if it is workable from DFW. A location string that
     // names a non-US region with no US location is a region-locked remote role.
@@ -49,8 +55,9 @@ export function checkLocation(job, profile) {
     if (nonUS && !hasUS) return { pass: false, kind: "out-of-area" };
     return { pass: true, kind: "remote" };
   }
-  if (profile.location.dfwCities.some((c) => loc.includes(c) || loc.includes("texas") || loc.includes(", tx")))
-    return { pass: true, kind: "dfw" };
+  // On-site/hybrid: DFW metro only. Not "anywhere in Texas" - Houston and
+  // El Paso are not commutable from Dallas.
+  if (profile.location.dfwCities.some((c) => loc.includes(c))) return { pass: true, kind: "dfw" };
   return { pass: false, kind: "out-of-area" };
 }
 

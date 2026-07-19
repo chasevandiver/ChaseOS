@@ -75,7 +75,13 @@
       "china", "hong kong", "taiwan", "korea", "philippines", "indonesia", "malaysia",
       "thailand", "vietnam", "canada", "ontario", "quebec", "mexico", "colombia", "brazil",
       "argentina", "chile", "peru", "costa rica", "israel", "\\buae\\b", "dubai",
-      "saudi arabia", "turkey", "south africa", "egypt", "nigeria", "kenya"
+      "saudi arabia", "turkey", "south africa", "egypt", "nigeria", "kenya",
+      "london", "dublin", "paris", "berlin", "munich", "amsterdam", "madrid", "barcelona",
+      "lisbon", "zurich", "geneva", "vienna", "stockholm", "copenhagen", "oslo", "helsinki",
+      "warsaw", "prague", "tel aviv", "vancouver", "toronto", "montreal", "ottawa", "calgary",
+      "sydney", "melbourne", "auckland", "tokyo", "osaka", "seoul", "shanghai", "beijing",
+      "bangalore", "bengaluru", "mumbai", "delhi", "hyderabad", "pune", "chennai",
+      "sao paulo", "mexico city", "bogota", "buenos aires", "santiago"
     ]
   },
   "freshness": {
