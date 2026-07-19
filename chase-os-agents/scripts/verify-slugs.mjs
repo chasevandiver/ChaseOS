@@ -42,8 +42,8 @@ for (const company of config.companies) {
     company.ats = null;
     company.slug = null;
     console.log(
-      "NOT FOUND on Greenhouse/Lever/Ashby/Workable. Likely Workday or a custom ATS. " +
-        "This company stays in the chat deep sweep, not the puller."
+      "NOT FOUND on Greenhouse/Lever/Ashby/Workable/Workday candidates. Custom ATS or unguessed " +
+        "Workday tenant. This company stays in the chat deep sweep, not the puller."
     );
   }
 }

@@ -81,7 +81,14 @@
       "warsaw", "prague", "tel aviv", "vancouver", "toronto", "montreal", "ottawa", "calgary",
       "sydney", "melbourne", "auckland", "tokyo", "osaka", "seoul", "shanghai", "beijing",
       "bangalore", "bengaluru", "mumbai", "delhi", "hyderabad", "pune", "chennai",
-      "sao paulo", "mexico city", "bogota", "buenos aires", "santiago"
+      "sao paulo", "mexico city", "bogota", "buenos aires", "santiago",
+      "british columbia", "alberta", "saskatchewan", "manitoba", "nova scotia", "new brunswick"
+    ],
+    "regionLockedUsRule": "A remote segment anchored to a non-DFW US metro (e.g. 'Remote - Denver') is region-locked and does not count as workable remote. Enforced in code.",
+    "regionLockedUsMarkers": [
+      "san francisco", "new york", "boston", "chicago", "seattle", "denver", "atlanta",
+      "los angeles", "san diego", "phoenix", "philadelphia", "portland", "miami",
+      "minneapolis", "nashville", "charlotte", "salt lake", "washington dc", "bay area"
     ]
   },
   "freshness": {

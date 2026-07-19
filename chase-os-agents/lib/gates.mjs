@@ -32,32 +32,39 @@ export function checkFreshness(postedDate, profile) {
   return { pass: true, ageDays };
 }
 
+// Location gate, evaluated per location segment (ATSes join multi-location
+// postings with ";" or "|"). A job passes if ANY segment is workable:
+//   - a DFW/Texas segment (on-site is fine there, remote even better), or
+//   - a remote segment that is not locked to a region Chase cannot live in:
+//     non-US regions, non-Texas US states ("Remote - Florida", "USA - Remote,
+//     OH"), or a non-DFW metro anchor ("Remote - Denver").
+// The structured remote flag (Ashby/Workable) alone only counts when the
+// location is country-level ("United States", empty): companies set it on
+// hybrid office roles, so city-listing locations go through the checks above.
+// Description text is never trusted; "we are a remote-first company"
+// boilerplate says nothing about where THIS role sits.
+const US_STATE_RX = new RegExp(
+  "\\b(alabama|alaska|arizona|arkansas|california|colorado|connecticut|delaware|florida|georgia|hawaii|idaho|illinois|indiana|iowa|kansas|kentucky|louisiana|maine|maryland|massachusetts|michigan|minnesota|mississippi|missouri|montana|nebraska|nevada|new hampshire|new jersey|new mexico|new york|north carolina|north dakota|ohio|oklahoma|oregon|pennsylvania|rhode island|south carolina|south dakota|tennessee|utah|vermont|virginia|washington|west virginia|wisconsin|wyoming)\\b" +
+    "|,\\s*(al|ak|az|ar|ca|co|ct|de|fl|ga|hi|id|il|in|ia|ks|ky|la|me|md|ma|mi|mn|ms|mo|mt|ne|nv|nh|nj|nm|ny|nc|nd|oh|ok|or|pa|ri|sc|sd|tn|ut|vt|va|wa|wv|wi|wy)\\b"
+);
+
 export function checkLocation(job, profile) {
   const loc = (job.location ?? "").toLowerCase();
-  // Remote must come from the ATS's own signals, and they must agree. The
-  // location field saying "remote" is definitive. The structured remote flag
-  // (Ashby/Workable) alone is not: companies set it on hybrid office roles,
-  // so it only counts when the location is country-level ("United States",
-  // empty). If the location names specific cities and never says remote,
-  // the cities are the claim we can verify - they go through the DFW check.
-  // Description text is never trusted; "we are a remote-first company"
-  // boilerplate says nothing about where THIS role sits.
-  const locSaysRemote = /\bremote\b|work from anywhere/.test(loc);
-  const countryLevel = loc.trim() === "" || /^(united states|usa|u\.s\.|us|north america|amer|americas)$/.test(loc.trim());
-  const remote = locSaysRemote || (job.remote === true && countryLevel);
-  if (remote) {
-    // Remote only counts if it is workable from DFW. A location string that
-    // names a non-US region with no US location is a region-locked remote role.
-    const hasUS =
-      /\busa\b|\bu\.s\.?\b|united states|\bus\b|texas|, tx\b/.test(loc) ||
-      profile.location.dfwCities.some((c) => loc.includes(c));
-    const nonUS = (profile.location.nonUsMarkers ?? []).some((m) => new RegExp(`\\b${m}\\b`, "i").test(loc));
-    if (nonUS && !hasUS) return { pass: false, kind: "out-of-area" };
-    return { pass: true, kind: "remote" };
+  const dfwCity = (s) => profile.location.dfwCities.some((c) => s.includes(c));
+  const texasWide = (s) => /\btexas\b|, tx\b/.test(s);
+  const nonUS = (s) => (profile.location.nonUsMarkers ?? []).some((m) => new RegExp(`\\b${m}\\b`, "i").test(s));
+  const metroLocked = (s) => (profile.location.regionLockedUsMarkers ?? []).some((m) => new RegExp(`\\b${m}\\b`, "i").test(s));
+  const countryLevel = (s) => s === "" || /^(united states|usa|u\.s\.|us|north america|amer|americas)$/.test(s);
+
+  const segs = loc.split(/[;|]/).map((s) => s.trim()).filter(Boolean);
+  for (const s of segs) {
+    if (nonUS(s)) continue;
+    if (dfwCity(s)) return { pass: true, kind: /\bremote\b/.test(s) ? "remote" : "dfw" };
+    const saysRemote = /\bremote\b|work from anywhere/.test(s);
+    if (saysRemote && texasWide(s)) return { pass: true, kind: "remote" };
+    if (saysRemote && !US_STATE_RX.test(s) && !metroLocked(s)) return { pass: true, kind: "remote" };
   }
-  // On-site/hybrid: DFW metro only. Not "anywhere in Texas" - Houston and
-  // El Paso are not commutable from Dallas.
-  if (profile.location.dfwCities.some((c) => loc.includes(c))) return { pass: true, kind: "dfw" };
+  if (job.remote === true && segs.every(countryLevel)) return { pass: true, kind: "remote" };
   return { pass: false, kind: "out-of-area" };
 }
 
@@ -103,7 +110,7 @@ export function runGates(job, profile) {
   if (fresh.pass === null) flags.push(fresh.flag);
   else facts.ageDays = fresh.ageDays;
   if (job.postedDateSource && job.postedDateSource.includes("upper bound")) {
-    flags.push("posted date from updated_at, treat as an upper bound on freshness");
+    flags.push(`posted date from ${job.postedDateSource}, treat as an upper bound on freshness`);
   }
 
   const loc = checkLocation(job, profile);

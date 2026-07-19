@@ -145,11 +145,133 @@ export async function pullWorkable(slug) {
   return { ok: true, jobs };
 }
 
+// ---------- Workday ----------
+// Every Workday-hosted careers site exposes a public JSON API:
+//   POST https://{tenant}.{wdN}.myworkdayjobs.com/wday/cxs/{tenant}/{site}/jobs
+// Slug format: "tenant/wdN/site" (e.g. "gartner/wd5/EXT").
+//
+// Two honest limits, both visible downstream:
+// - Workday lists jobs with relative dates ("Posted 3 Days Ago"). We convert
+//   exact values to a day and mark the source "upper bound"; "30+ Days Ago"
+//   has no exact day and those listings are skipped (they can never pass the
+//   14-day gate anyway). No date is ever invented.
+// - Tenants can hold thousands of postings, so this puller sweeps the API's
+//   own search with the sales/marketing title keywords instead of paginating
+//   everything. A posting outside those searches is not seen; the sweep is
+//   reported in the run note so the cap is never silent.
+const WD_KEYWORDS = [
+  "account executive", "account manager", "business development", "sales development",
+  "sales executive", "sales manager", "sales representative", "inside sales",
+  "enterprise sales", "channel sales", "client executive", "mid-market",
+  "partnerships", "sponsorship", "marketing manager", "demand generation",
+  "field marketing", "event marketing", "growth marketing", "lifecycle marketing",
+  "product marketing", "campaign manager",
+];
+const WD_DETAIL_CAP = 150;
+
+export async function pullWorkday(slug) {
+  const [tenant, wd, site] = (slug ?? "").split("/");
+  if (!tenant || !wd || !site) return { ok: false, reason: "workday slug must be tenant/wdN/site" };
+  const host = `https://${tenant}.${wd}.myworkdayjobs.com`;
+  const base = `${host}/wday/cxs/${tenant}/${site}`;
+
+  async function search(body) {
+    const res = await fetch(`${base}/jobs`, {
+      method: "POST",
+      headers: { ...UA, "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify(body),
+    });
+    if (res.status === 404) return { notFound: true };
+    if (!res.ok) throw new Error(`${base}/jobs -> HTTP ${res.status}`);
+    return { data: await res.json() };
+  }
+
+  // Cheap validity probe before any sweep.
+  const probe = await search({ appliedFacets: {}, limit: 1, offset: 0, searchText: "" });
+  if (probe.notFound || !Array.isArray(probe.data?.jobPostings)) return { ok: false, reason: "board not found" };
+
+  // Keyword sweep, deduped on externalPath, max 100 listings per keyword.
+  const seen = new Map();
+  for (const kw of WD_KEYWORDS) {
+    let offset = 0;
+    let total = Infinity;
+    while (offset < Math.min(total, 100)) {
+      const { data, notFound } = await search({ appliedFacets: {}, limit: 20, offset, searchText: kw });
+      if (notFound || !data?.jobPostings?.length) break;
+      total = data.total ?? 0;
+      for (const p of data.jobPostings) {
+        if (p.externalPath && !seen.has(p.externalPath)) seen.set(p.externalPath, p);
+      }
+      offset += 20;
+    }
+  }
+
+  const daysAgo = (postedOn) => {
+    const s = (postedOn ?? "").toLowerCase();
+    if (s.includes("today")) return 0;
+    if (s.includes("yesterday")) return 1;
+    const m = s.match(/(\d+)(\+?)\s*days? ago/);
+    if (!m || m[2] === "+") return null;
+    return parseInt(m[1], 10);
+  };
+  const isoFromDaysAgo = (n) => new Date(Date.now() - n * 86400000).toISOString().slice(0, 10);
+  const listingJob = (p, n) => ({
+    ats: "workday",
+    atsJobId: p.externalPath,
+    title: p.title,
+    location: p.locationsText ?? "",
+    url: `${host}/${site}${p.externalPath}`,
+    postedDate: isoFromDaysAgo(n),
+    postedDateSource: "workday postedOn relative (upper bound only)",
+    comp: null,
+    description: "",
+  });
+
+  const jobs = [];
+  let skippedNoDate = 0;
+  let detailFetches = 0;
+  for (const p of seen.values()) {
+    const n = daysAgo(p.postedOn);
+    if (n === null) { skippedNoDate++; continue; }
+    // Detail fetch (description, precise location, comp) only for listings
+    // fresh enough to survive the 14-day gate.
+    if (n > 14 || detailFetches >= WD_DETAIL_CAP) {
+      jobs.push(listingJob(p, n));
+      continue;
+    }
+    detailFetches++;
+    try {
+      const res = await fetch(`${base}${p.externalPath}`, { headers: { ...UA, Accept: "application/json" } });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const info = (await res.json()).jobPostingInfo ?? {};
+      const desc = stripHtml(info.jobDescription ?? "");
+      jobs.push({
+        ats: "workday",
+        atsJobId: info.id ?? p.externalPath,
+        title: info.title ?? p.title,
+        location: [info.location, ...(info.additionalLocations ?? [])].filter(Boolean).join("; ") || (p.locationsText ?? ""),
+        url: info.externalUrl || `${host}/${site}${p.externalPath}`,
+        postedDate: isoFromDaysAgo(n),
+        postedDateSource: "workday postedOn relative (upper bound only)",
+        comp: extractCompText(desc),
+        description: desc,
+      });
+    } catch {
+      jobs.push(listingJob(p, n)); // detail unreachable: keep listing-level facts only
+    }
+  }
+  const notes = [`keyword sweep (${WD_KEYWORDS.length} searches)`];
+  if (skippedNoDate) notes.push(`${skippedNoDate} listings marked "30+ days" skipped (no exact date)`);
+  if (detailFetches >= WD_DETAIL_CAP) notes.push(`detail cap ${WD_DETAIL_CAP} reached, extra fresh listings kept without descriptions`);
+  return { ok: true, jobs, note: notes.join("; ") };
+}
+
 export const PULLERS = {
   greenhouse: pullGreenhouse,
   lever: pullLever,
   ashby: pullAshby,
   workable: pullWorkable,
+  workday: pullWorkday,
 };
 
 // Recognize an ATS-hosted URL already sitting in the Radar so the hygiene
@@ -173,6 +295,11 @@ export function classifyUrl(u) {
     }
     if (h === "apply.workable.com" && parts.length >= 3 && parts[1] === "j") {
       return { ats: "workable", slug: parts[0], jobId: parts[2] };
+    }
+    if (h.endsWith(".myworkdayjobs.com") && parts.length >= 2) {
+      // {tenant}.{wdN}.myworkdayjobs.com/{site}/job/... -> slug tenant/wdN/site
+      const [tenant, wdN] = h.split(".");
+      return { ats: "workday", slug: `${tenant}/${wdN}/${parts[0]}`, jobId: `/${parts.slice(1).join("/")}` };
     }
     return null;
   } catch {

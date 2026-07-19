@@ -71,6 +71,11 @@
         ],
         "workable": [
           "cvent"
+        ],
+        "workday": [
+          "cvent/wd1/External",
+          "cvent/wd1/CventCareers",
+          "cvent/wd5/External"
         ]
       }
     },
@@ -92,6 +97,10 @@
         ],
         "workable": [
           "optimizely"
+        ],
+        "workday": [
+          "optimizely/wd5/External",
+          "optimizely/wd1/External"
         ]
       }
     },
@@ -113,6 +122,10 @@
         ],
         "workable": [
           "semrush"
+        ],
+        "workday": [
+          "semrush/wd3/External",
+          "semrush/wd1/External"
         ]
       }
     },
@@ -329,6 +342,10 @@
         ],
         "lever": [
           "seismic"
+        ],
+        "workday": [
+          "seismic/wd1/External",
+          "seismic/wd5/External"
         ]
       }
     },
@@ -530,6 +547,10 @@
         ],
         "lever": [
           "o9solutions"
+        ],
+        "workday": [
+          "o9solutions/wd1/External",
+          "o9solutions/wd5/External"
         ]
       }
     },
@@ -958,6 +979,11 @@
         ],
         "lever": [
           "procore"
+        ],
+        "workday": [
+          "procoretech/wd5/External",
+          "procoretech/wd1/External",
+          "procore/wd1/External"
         ]
       }
     },
@@ -977,17 +1003,21 @@
     {
       "name": "Plaid",
       "target": false,
-      "verified": false,
-      "ats": null,
-      "slug": null,
+      "verified": true,
+      "ats": "ashby",
+      "slug": "plaid",
       "candidates": {
         "greenhouse": [
           "plaid"
         ],
         "lever": [
           "plaid"
+        ],
+        "ashby": [
+          "plaid"
         ]
-      }
+      },
+      "verifiedAt": "2026-07-19"
     },
     {
       "name": "Affirm",
@@ -1213,6 +1243,10 @@
         ],
         "lever": [
           "bamboohr"
+        ],
+        "workday": [
+          "bamboohr/wd1/BambooHR",
+          "bamboohr/wd1/External"
         ]
       }
     },
@@ -1228,6 +1262,9 @@
         ],
         "lever": [
           "velocityglobal"
+        ],
+        "workday": [
+          "velocityglobal/wd1/External"
         ]
       }
     },
@@ -1263,6 +1300,9 @@
         ],
         "lever": [
           "snyk"
+        ],
+        "workday": [
+          "snyk/wd1/External"
         ]
       }
     },
@@ -1313,6 +1353,11 @@
         ],
         "lever": [
           "sentinelone"
+        ],
+        "workday": [
+          "sentinelone/wd5/SentinelOnecareers",
+          "sentinelone/wd5/External",
+          "sentinelone/wd1/External"
         ]
       }
     },
@@ -1412,6 +1457,10 @@
       "candidates": {
         "greenhouse": [
           "confluent"
+        ],
+        "workday": [
+          "confluent/wd1/External",
+          "confluent/wd1/Careers"
         ]
       }
     },
@@ -1450,6 +1499,9 @@
       "candidates": {
         "greenhouse": [
           "hashicorp"
+        ],
+        "workday": [
+          "hashicorp/wd1/External"
         ]
       }
     },
@@ -1505,7 +1557,8 @@
       "slug": null,
       "candidates": {
         "greenhouse": [
-          "docker"
+          "docker",
+          "dockerinc"
         ],
         "lever": [
           "docker"
@@ -1515,17 +1568,21 @@
     {
       "name": "1Password",
       "target": false,
-      "verified": false,
-      "ats": null,
-      "slug": null,
+      "verified": true,
+      "ats": "ashby",
+      "slug": "1password",
       "candidates": {
         "greenhouse": [
           "1password"
         ],
         "lever": [
           "1password"
+        ],
+        "ashby": [
+          "1password"
         ]
-      }
+      },
+      "verifiedAt": "2026-07-19"
     },
     {
       "name": "Figma",
@@ -1582,6 +1639,10 @@
         ],
         "lever": [
           "springhealth"
+        ],
+        "ashby": [
+          "spring-health",
+          "springhealth"
         ]
       }
     },
@@ -1623,17 +1684,22 @@
     {
       "name": "Hinge Health",
       "target": false,
-      "verified": false,
-      "ats": null,
-      "slug": null,
+      "verified": true,
+      "ats": "ashby",
+      "slug": "hinge-health",
       "candidates": {
         "greenhouse": [
           "hingehealth"
         ],
         "lever": [
           "hingehealth"
+        ],
+        "ashby": [
+          "hinge-health",
+          "hingehealth"
         ]
-      }
+      },
+      "verifiedAt": "2026-07-19"
     },
     {
       "name": "Included Health",
@@ -1764,6 +1830,75 @@
         ],
         "lever": [
           "birdeye"
+        ]
+      }
+    },
+    {
+      "name": "Gartner",
+      "target": true,
+      "verified": true,
+      "ats": "workday",
+      "slug": "gartner/wd5/EXT",
+      "candidates": {
+        "workday": [
+          "gartner/wd5/EXT",
+          "gartner/wd5/External"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Adobe",
+      "target": true,
+      "verified": true,
+      "ats": "workday",
+      "slug": "adobe/wd5/external_experienced",
+      "candidates": {
+        "workday": [
+          "adobe/wd5/external_experienced",
+          "adobe/wd5/External"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Salesforce",
+      "target": true,
+      "verified": true,
+      "ats": "workday",
+      "slug": "salesforce/wd12/External_Career_Site",
+      "candidates": {
+        "workday": [
+          "salesforce/wd12/External_Career_Site",
+          "salesforce/wd1/External"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "CrowdStrike",
+      "target": false,
+      "verified": true,
+      "ats": "workday",
+      "slug": "crowdstrike/wd5/crowdstrikecareers",
+      "candidates": {
+        "workday": [
+          "crowdstrike/wd5/crowdstrikecareers",
+          "crowdstrike/wd5/External"
+        ]
+      },
+      "verifiedAt": "2026-07-19"
+    },
+    {
+      "name": "Zoom",
+      "target": false,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "workday": [
+          "zoom/wd5/Zoom",
+          "zoom/wd5/External"
         ]
       }
     }
