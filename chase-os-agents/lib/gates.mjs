@@ -2,7 +2,7 @@
 // reproducible. No LLM touches this file's output. The gates decide:
 //   - track (Sales / Marketing / none) from title keywords
 //   - freshness (posted <= maxAgeDays, or "date unverified")
-//   - location (remote / DFW / out-of-area premium rule)
+//   - location (remote or DFW only; out-of-area is an automatic C)
 //   - comp (meets floor / below floor / "comp unverified")
 // and produce autoTier C for hard fails, or pass the job to the rubric
 // scorer with its flags attached. "Unverified" is a flag, never a guess.
@@ -39,10 +39,19 @@ export function checkLocation(job, profile) {
     job.remote === true ||
     /\bremote\b/.test(loc) ||
     /(fully remote|remote[- ]first|work from anywhere|us[- ]remote|remote \(us\))/.test(desc);
-  if (remote) return { pass: true, kind: "remote" };
+  if (remote) {
+    // Remote only counts if it is workable from DFW. A location string that
+    // names a non-US region with no US location is a region-locked remote role.
+    const hasUS =
+      /\busa\b|\bu\.s\.?\b|united states|\bus\b|texas|, tx\b/.test(loc) ||
+      profile.location.dfwCities.some((c) => loc.includes(c));
+    const nonUS = (profile.location.nonUsMarkers ?? []).some((m) => new RegExp(`\\b${m}\\b`, "i").test(loc));
+    if (nonUS && !hasUS) return { pass: false, kind: "out-of-area" };
+    return { pass: true, kind: "remote" };
+  }
   if (profile.location.dfwCities.some((c) => loc.includes(c) || loc.includes("texas") || loc.includes(", tx")))
     return { pass: true, kind: "dfw" };
-  return { pass: "conditional", kind: "out-of-area" };
+  return { pass: false, kind: "out-of-area" };
 }
 
 // Parse the largest and smallest dollar figures out of a comp string.
@@ -59,7 +68,7 @@ export function parseComp(compText) {
   return { min: Math.min(...nums), max: Math.max(...nums), text: compText };
 }
 
-export function checkComp(job, track, locationKind, profile) {
+export function checkComp(job, track, profile) {
   const tr = profile.tracks[track];
   const parsed = parseComp(job.comp);
   if (!parsed) return { pass: null, flag: "comp unverified (no stated range in API or description)" };
@@ -67,11 +76,6 @@ export function checkComp(job, track, locationKind, profile) {
   const oteFloor = tr.oteFloor;
   const looksOTE = /ote|on[- ]target/i.test(job.comp ?? "") || /ote|on[- ]target/i.test(job.description ?? "");
   const effectiveFloor = looksOTE && oteFloor ? oteFloor : floor;
-  const premiumFloor = Math.round(effectiveFloor * 1.2);
-  if (locationKind === "out-of-area") {
-    if (parsed.max >= premiumFloor) return { pass: true, note: `out-of-area but max $${parsed.max.toLocaleString()} clears the 20% premium bar ($${premiumFloor.toLocaleString()})`, parsed };
-    return { pass: false, reason: `out-of-area and stated max $${parsed.max.toLocaleString()} does not clear the premium bar ($${premiumFloor.toLocaleString()})` };
-  }
   if (parsed.max >= effectiveFloor) return { pass: true, parsed };
   return { pass: false, reason: `stated max $${parsed.max.toLocaleString()} is below the ${track} floor ($${effectiveFloor.toLocaleString()})` };
 }
@@ -96,15 +100,15 @@ export function runGates(job, profile) {
   }
 
   const loc = checkLocation(job, profile);
+  if (loc.pass === false) {
+    return { autoTier: "C", reasons: [`location: out-of-area "${job.location}" (cannot relocate, DFW or remote only)`] };
+  }
   facts.locationKind = loc.kind;
 
-  const comp = checkComp(job, t.track, loc.kind, profile);
+  const comp = checkComp(job, t.track, profile);
   if (comp.pass === false) return { autoTier: "C", reasons: [`comp: ${comp.reason}`] };
   if (comp.pass === null) {
     flags.push(comp.flag);
-    if (loc.kind === "out-of-area") {
-      return { autoTier: "C", reasons: ["out-of-area with no stated comp: cannot verify the premium rule, so skip"] };
-    }
   } else {
     facts.comp = comp.parsed;
     if (comp.note) facts.compNote = comp.note;

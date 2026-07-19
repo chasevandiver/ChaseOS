@@ -22,7 +22,7 @@
         "mid-market", "inside sales", "channel sales", "client executive", "sales development"
       ],
       "baseFloor": 65000,
-      "oteFloor": 130000,
+      "oteFloor": 110000,
       "evidenceAnchors": [
         "Built a supplier-partner sponsorship program from zero to $300K in recurring annual revenue",
         "Full cycle: prospected new partners, pitched tailored packages, closed agreements, renewed year over year",
@@ -64,7 +64,19 @@
       "lewisville", "mckinney", "allen", "southlake", "coppell", "grand prairie", "dfw"
     ],
     "remoteAccepted": true,
-    "outOfAreaRule": "Only include out-of-area roles when stated comp is at least 20% above the track floor. Enforced in code."
+    "outOfAreaRule": "Out-of-area roles are excluded entirely. Chase cannot relocate: DFW or US-remote only. Enforced in code.",
+    "remoteRegionRule": "A remote role whose API location string names a non-US region (and no US location) is out-of-area. Based only on the API's own location text, never inferred.",
+    "nonUsMarkers": [
+      "germany", "austria", "switzerland", "dach", "united kingdom", "\\buk\\b", "ireland",
+      "france", "spain", "portugal", "netherlands", "belgium", "luxembourg", "nordics",
+      "sweden", "denmark", "norway", "finland", "iceland", "poland", "czech", "slovakia",
+      "hungary", "romania", "bulgaria", "italy", "greece", "estonia", "latvia", "lithuania",
+      "emea", "apac", "latam", "australia", "new zealand", "singapore", "japan", "india",
+      "china", "hong kong", "taiwan", "korea", "philippines", "indonesia", "malaysia",
+      "thailand", "vietnam", "canada", "ontario", "quebec", "mexico", "colombia", "brazil",
+      "argentina", "chile", "peru", "costa rica", "israel", "\\buae\\b", "dubai",
+      "saudi arabia", "turkey", "south africa", "egypt", "nigeria", "kenya"
+    ]
   },
   "freshness": {
     "maxAgeDays": 14,
