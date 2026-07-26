@@ -12,21 +12,24 @@ waiting on a reply from Chase, not the other side. They are the only human
 responses in the entire pipeline. Clear that backlog before sending a single
 new application. (The weekly review of Jul 13-20 flagged the same thing.)
 
-## 2. Finalize and file the sales resume
+## 2. Keep the sales resume current and filed
 
-The sales resume exists only as a Gmail attachment ("Chase Vandiver Resume
-Sales.pdf", sent to Jeff 7/16). Two edits are agreed and pending: drop the
-"Now focused on..." summary line, and add an AI-capability line under core
-skills/tools. Apply them, export the PDF, and save the canonical copy to
-Google Drive so `Chase_Vandiver_Resume_Sales.pdf` in config/match-profile.json
-points at a real, current file.
+The canonical copy lives in this folder as `Chase_Vandiver_Resume_Sales.pdf`
+(filed 2026-07-26, with Jeff's two edits applied: no "Now focused on..." line,
+AI capability under Core Strengths and Skills). When the resume changes,
+replace this file and update the evidenceAnchors in config/match-profile.json
+to quote the new text exactly.
 
 The two roles Chase himself flagged as best-fit (DataRails Partnership
 Manager: "the exact job"; HubSpot SMB AE: "built as a first AE seat") both
 died at resume screen. When the targets are right and the screen still fails,
-the artifact is the problem. Every bullet on the sales resume should map to
-one of the evidenceAnchors in match-profile.json, led by the $300K
-zero-to-recurring sponsorship program.
+the artifact is the problem. Open items from the 2026-07-26 review: both job
+titles on the resume are marketing titles, so a sales-keyword screen finds no
+sales title anywhere; the $300K program has no supporting deal metrics
+(partner count, average deal size, renewal rate); "quota ownership" is
+claimed in Skills but no quota was ever formally carried; and the
+Aug 2025-to-present gap is unexplained even though the web design client work
+would fill it with real prospecting-and-closing evidence.
 
 ## 3. Referral-first on every A-tier role
 
