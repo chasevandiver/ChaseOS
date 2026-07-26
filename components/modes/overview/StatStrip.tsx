@@ -18,6 +18,7 @@ const TILES: Tile[] = [
   { key: "aTier", label: "A-Tier", sub: "targets hot", mode: "jobs" },
   { key: "radarTotal", label: "Radar", sub: "roles tracked", mode: "jobs" },
   { key: "pipelineActive", label: "Missions", sub: "in flight", mode: "pipeline" },
+  { key: "responseRate", label: "Response", sub: "% engaged", mode: "pipeline" },
   { key: "overdue", label: "Overdue", sub: "need action", mode: "pipeline", tone: "amber" },
   { key: "projectsActive", label: "Builds", sub: "in motion", mode: "projects" },
 ];

@@ -1,0 +1,97 @@
+{
+  "_readme": [
+    "Built from Chase_Vandiver_Resume_Sales.pdf and Chase_Vandiver_Resume_2026.pdf.",
+    "Hard gates are enforced deterministically in code (lib/gates.mjs).",
+    "Evidence anchors feed the radar-scorer subagent, which may only award fit",
+    "points by quoting the job description. Update this file when the resumes change.",
+    "Retuned 2026-07 after 39 applications produced zero interviews: targeting is",
+    "winnable-first. Senior/Strategic/Enterprise titles are excluded, roles requiring",
+    "6+ years are auto-C and 4-5 years capped B, location is remote-or-DFW only with",
+    "no comp exception, and the Marketing track is a backup capped at Tier B."
+  ],
+  "candidate": {
+    "name": "Chase Vandiver",
+    "location": "Dallas, TX",
+    "yearsExperience": 8,
+    "positioning": "Built and owned a partner sponsorship revenue program from zero to $300K recurring annual revenue. Qualified buyer-to-seller pivot, wants to carry a quota full time."
+  },
+  "tracks": {
+    "Sales": {
+      "priority": 1,
+      "resume": "Chase_Vandiver_Resume_Sales.pdf",
+      "titleKeywords": [
+        "partnership", "partnerships", "sponsorship",
+        "account manager", "account management",
+        "\\bsmb\\b", "small business",
+        "inside sales", "\\bsdr\\b", "\\bbdr\\b", "sales development", "business development",
+        "channel sales", "client executive",
+        "sales representative", "sales executive", "sales manager",
+        "account executive", "\\bae\\b"
+      ],
+      "baseFloor": 65000,
+      "oteFloor": 130000,
+      "maxRequiredYears": {
+        "capB": 4,
+        "autoC": 6,
+        "rule": "JDs demanding 4-5 years of sales experience are flagged and capped at Tier B; 6+ years is an automatic C. Chase is making a buyer-to-seller pivot with 0 formal quota-carrying years, so heavy YOE screens are unwinnable at resume stage."
+      },
+      "evidenceAnchors": [
+        "Built a supplier-partner sponsorship program from zero to $300K in recurring annual revenue",
+        "Full cycle: prospected new partners, pitched tailored packages, closed agreements, renewed year over year",
+        "Single point of contact from first outreach through contract and renewal (account management)",
+        "Reported performance, pipeline, and recommendations directly to the CEO (executive presence)",
+        "Contract negotiation and consultative selling with supplier partners",
+        "CRM: HubSpot. Also Cvent, Google Analytics, Mailchimp, Asana",
+        "Ran annual conference for 400+ attendees end to end (event and sponsor operations)",
+        "8 years generating revenue in self-directed, solo-owner roles"
+      ]
+    },
+    "Marketing": {
+      "priority": 2,
+      "maxTier": "B",
+      "maxTierRule": "Backup track only. Marketing roles are always flagged and capped at Tier B so they never compete with the sales pivot for A-tier attention.",
+      "resume": "Chase_Vandiver_Resume_2026.pdf",
+      "titleKeywords": [
+        "marketing manager", "growth marketing", "demand gen",
+        "demand generation", "brand manager", "field marketing", "event marketing",
+        "events manager", "marketing communications", "digital marketing manager",
+        "content marketing manager", "lifecycle marketing", "campaign manager"
+      ],
+      "baseFloor": 75000,
+      "oteFloor": null,
+      "evidenceAnchors": [
+        "Ran the entire marketing department solo, reporting directly to the CEO",
+        "Built a sponsorship program from scratch that brought in $300K annually",
+        "Website overhaul and SEO push grew organic traffic 25% in year one",
+        "Annual conference: 400+ attendees, vendors, keynote coordination, full logistics",
+        "Integrated email, social, digital campaigns lifted engagement 15% YoY",
+        "Social media engagement up 35% in first year via content and cadence rework",
+        "Email open rates up 15% through subject line testing and segmentation",
+        "Owned Marketing and Events budget; HubSpot, Mailchimp, GA, Cvent, Asana, Adobe CC"
+      ]
+    }
+  },
+  "location": {
+    "dfwCities": [
+      "dallas", "fort worth", "irving", "plano", "frisco", "richardson", "addison",
+      "farmers branch", "arlington", "grapevine", "las colinas", "carrollton",
+      "lewisville", "mckinney", "allen", "southlake", "coppell", "grand prairie", "dfw"
+    ],
+    "remoteAccepted": true,
+    "outOfAreaRule": "Out-of-area roles are excluded, period. A role passes location only if it is explicitly remote-eligible or in a DFW city. No comp-based exception. Enforced in code."
+  },
+  "freshness": {
+    "maxAgeDays": 14,
+    "missingDateRule": "If the ATS provides no posted date, the row is flagged 'date unverified' and capped at Tier B. Never guess a date."
+  },
+  "compRules": {
+    "missingCompRule": "If no comp is stated by the API or the job description, comp stays blank, the row is flagged 'comp unverified' and capped at Tier B. Never estimate comp.",
+    "belowFloorRule": "Stated comp below the track floor is an automatic C. Deterministic, computed in code."
+  },
+  "seniorityExclusions": [
+    "\\bvp\\b", "vice president", "\\bcmo\\b", "\\bcro\\b", "chief ", "\\bdirector, sales\\b",
+    "\\bintern\\b", "internship", "\\bhead of\\b",
+    "\\bsenior\\b", "\\bsr\\.?\\b", "\\bstrategic\\b", "\\benterprise\\b",
+    "\\bprincipal\\b", "\\bstaff\\b", "\\blead\\b(?!\\s*gen)"
+  ]
+}
