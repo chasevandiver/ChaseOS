@@ -1,0 +1,1 @@
+Run `node agents/radar-hygiene.mjs` with the Bash tool. Then report three lists: confirmed live (via ATS API), confirmed closed with the exact proof used (these were set to Passed in Notion), and unverified rows that need Chase's eyes with their links tappable. Do not change anything for unverified rows. No em dashes.

@@ -1,0 +1,685 @@
+{
+  "_readme": [
+    "Companies the ATS puller watches. Every entry starts unverified.",
+    "Run `node scripts/verify-slugs.mjs` to probe the candidate slugs against",
+    "the live ATS APIs. The puller REFUSES to use any entry where",
+    "verified != true, so a wrong guess can never produce a fake job row.",
+    "candidates are best-effort starting guesses across the four ATS types.",
+    "Add any company you meet: append an entry with candidates and re-verify."
+  ],
+  "companies": [
+    {
+      "name": "HubSpot",
+      "target": true,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "hubspotjobs",
+      "candidates": {
+        "greenhouse": [
+          "hubspotjobs",
+          "hubspot"
+        ],
+        "lever": [
+          "hubspot"
+        ],
+        "ashby": [
+          "hubspot"
+        ],
+        "workable": [
+          "hubspot"
+        ]
+      },
+      "verifiedAt": "2026-07-26"
+    },
+    {
+      "name": "Klaviyo",
+      "target": true,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "klaviyo",
+      "candidates": {
+        "greenhouse": [
+          "klaviyo"
+        ],
+        "lever": [
+          "klaviyo"
+        ],
+        "ashby": [
+          "klaviyo"
+        ],
+        "workable": [
+          "klaviyo"
+        ]
+      },
+      "verifiedAt": "2026-07-26"
+    },
+    {
+      "name": "Cvent",
+      "target": true,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "cvent"
+        ],
+        "lever": [
+          "cvent"
+        ],
+        "ashby": [
+          "cvent"
+        ],
+        "workable": [
+          "cvent"
+        ]
+      }
+    },
+    {
+      "name": "Optimizely",
+      "target": true,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "optimizely"
+        ],
+        "lever": [
+          "optimizely"
+        ],
+        "ashby": [
+          "optimizely"
+        ],
+        "workable": [
+          "optimizely"
+        ]
+      }
+    },
+    {
+      "name": "Semrush",
+      "target": true,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "semrush"
+        ],
+        "lever": [
+          "semrush"
+        ],
+        "ashby": [
+          "semrush"
+        ],
+        "workable": [
+          "semrush"
+        ]
+      }
+    },
+    {
+      "name": "Sprout Social",
+      "target": true,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "sproutsocial",
+      "candidates": {
+        "greenhouse": [
+          "sproutsocial"
+        ],
+        "lever": [
+          "sproutsocial"
+        ],
+        "ashby": [
+          "sprout-social",
+          "sproutsocial"
+        ],
+        "workable": [
+          "sproutsocial"
+        ]
+      },
+      "verifiedAt": "2026-07-26"
+    },
+    {
+      "name": "Constant Contact",
+      "target": true,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "constantcontact",
+      "candidates": {
+        "greenhouse": [
+          "constantcontact"
+        ],
+        "lever": [
+          "constantcontact"
+        ],
+        "ashby": [
+          "constant-contact",
+          "constantcontact"
+        ],
+        "workable": [
+          "constantcontact"
+        ]
+      },
+      "verifiedAt": "2026-07-26"
+    },
+    {
+      "name": "Braze",
+      "target": true,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "braze",
+      "candidates": {
+        "greenhouse": [
+          "braze"
+        ],
+        "lever": [
+          "braze"
+        ],
+        "ashby": [
+          "braze"
+        ],
+        "workable": [
+          "braze"
+        ]
+      },
+      "verifiedAt": "2026-07-26"
+    },
+    {
+      "name": "ActiveCampaign",
+      "target": true,
+      "verified": true,
+      "ats": "lever",
+      "slug": "activecampaign",
+      "candidates": {
+        "greenhouse": [
+          "activecampaign"
+        ],
+        "lever": [
+          "activecampaign"
+        ]
+      },
+      "verifiedAt": "2026-07-26"
+    },
+    {
+      "name": "Attentive",
+      "target": true,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "attentive",
+      "candidates": {
+        "greenhouse": [
+          "attentive"
+        ],
+        "ashby": [
+          "attentive"
+        ]
+      },
+      "verifiedAt": "2026-07-26"
+    },
+    {
+      "name": "Iterable",
+      "target": true,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "iterable",
+      "candidates": {
+        "greenhouse": [
+          "iterable"
+        ],
+        "lever": [
+          "iterable"
+        ]
+      },
+      "verifiedAt": "2026-07-26"
+    },
+    {
+      "name": "Customer.io",
+      "target": true,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "customerio",
+      "candidates": {
+        "greenhouse": [
+          "customerio"
+        ],
+        "ashby": [
+          "customerio",
+          "customer-io"
+        ]
+      },
+      "verifiedAt": "2026-07-26"
+    },
+    {
+      "name": "Bloomreach",
+      "target": true,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "bloomreach",
+      "candidates": {
+        "greenhouse": [
+          "bloomreach"
+        ],
+        "workable": [
+          "bloomreach"
+        ]
+      },
+      "verifiedAt": "2026-07-26"
+    },
+    {
+      "name": "Hootsuite",
+      "target": true,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "hootsuite",
+      "candidates": {
+        "greenhouse": [
+          "hootsuite"
+        ],
+        "lever": [
+          "hootsuite"
+        ],
+        "ashby": [
+          "hootsuite"
+        ]
+      },
+      "verifiedAt": "2026-07-26"
+    },
+    {
+      "name": "Pipedrive",
+      "target": true,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "pipedrive"
+        ],
+        "workable": [
+          "pipedrive"
+        ]
+      }
+    },
+    {
+      "name": "Podium",
+      "target": false,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "podium"
+        ],
+        "lever": [
+          "podium"
+        ]
+      }
+    },
+    {
+      "name": "Birdeye",
+      "target": false,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "birdeye"
+        ],
+        "lever": [
+          "birdeye"
+        ]
+      }
+    },
+    {
+      "name": "Bazaarvoice",
+      "target": true,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "bazaarvoice"
+        ]
+      }
+    },
+    {
+      "name": "BigCommerce",
+      "target": false,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "bigcommerce"
+        ]
+      }
+    },
+    {
+      "name": "Contentful",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "contentful",
+      "candidates": {
+        "greenhouse": [
+          "contentful"
+        ]
+      },
+      "verifiedAt": "2026-07-26"
+    },
+    {
+      "name": "Webflow",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "webflow",
+      "candidates": {
+        "greenhouse": [
+          "webflow"
+        ]
+      },
+      "verifiedAt": "2026-07-26"
+    },
+    {
+      "name": "Eventbrite",
+      "target": true,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "eventbriteinc",
+          "eventbrite"
+        ]
+      }
+    },
+    {
+      "name": "Bizzabo",
+      "target": true,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "bizzabo"
+        ],
+        "lever": [
+          "bizzabo"
+        ]
+      }
+    },
+    {
+      "name": "RainFocus",
+      "target": true,
+      "verified": true,
+      "ats": "lever",
+      "slug": "rainfocus",
+      "candidates": {
+        "greenhouse": [
+          "rainfocus"
+        ],
+        "lever": [
+          "rainfocus"
+        ]
+      },
+      "verifiedAt": "2026-07-26"
+    },
+    {
+      "name": "Splash",
+      "target": true,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "splashthat",
+          "splash"
+        ]
+      }
+    },
+    {
+      "name": "Zuddl",
+      "target": true,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "lever": [
+          "zuddl"
+        ],
+        "ashby": [
+          "zuddl"
+        ]
+      }
+    },
+    {
+      "name": "Sendoso",
+      "target": true,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "sendoso"
+        ],
+        "lever": [
+          "sendoso"
+        ]
+      }
+    },
+    {
+      "name": "Impact.com",
+      "target": true,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "impact",
+      "candidates": {
+        "greenhouse": [
+          "impact",
+          "impactcom"
+        ],
+        "lever": [
+          "impact"
+        ]
+      },
+      "verifiedAt": "2026-07-26"
+    },
+    {
+      "name": "Crossbeam",
+      "target": true,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "crossbeam"
+        ],
+        "lever": [
+          "crossbeam"
+        ],
+        "ashby": [
+          "crossbeam"
+        ]
+      }
+    },
+    {
+      "name": "PartnerStack",
+      "target": true,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "partnerstack"
+        ],
+        "ashby": [
+          "partnerstack"
+        ]
+      }
+    },
+    {
+      "name": "Teamworks",
+      "target": true,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "teamworks"
+        ],
+        "lever": [
+          "teamworks"
+        ]
+      }
+    },
+    {
+      "name": "Gong",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "gongio",
+      "candidates": {
+        "greenhouse": [
+          "gongio",
+          "gong"
+        ]
+      },
+      "verifiedAt": "2026-07-26"
+    },
+    {
+      "name": "Outreach",
+      "target": false,
+      "verified": true,
+      "ats": "lever",
+      "slug": "outreach",
+      "candidates": {
+        "greenhouse": [
+          "outreach"
+        ],
+        "lever": [
+          "outreach"
+        ]
+      },
+      "verifiedAt": "2026-07-26"
+    },
+    {
+      "name": "Salesloft",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "salesloft",
+      "candidates": {
+        "greenhouse": [
+          "salesloft"
+        ]
+      },
+      "verifiedAt": "2026-07-26"
+    },
+    {
+      "name": "ZoomInfo",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "zoominfo",
+      "candidates": {
+        "greenhouse": [
+          "zoominfo"
+        ]
+      },
+      "verifiedAt": "2026-07-26"
+    },
+    {
+      "name": "Demandbase",
+      "target": false,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "demandbase"
+        ]
+      }
+    },
+    {
+      "name": "6sense",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "6sense",
+      "candidates": {
+        "greenhouse": [
+          "6sense"
+        ]
+      },
+      "verifiedAt": "2026-07-26"
+    },
+    {
+      "name": "o9 Solutions",
+      "target": true,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "o9solutions"
+        ],
+        "lever": [
+          "o9solutions"
+        ]
+      }
+    },
+    {
+      "name": "Island",
+      "target": true,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "island"
+        ],
+        "lever": [
+          "island"
+        ],
+        "ashby": [
+          "island"
+        ]
+      }
+    },
+    {
+      "name": "OrderMyGear",
+      "target": true,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "ordermygear"
+        ],
+        "lever": [
+          "ordermygear"
+        ]
+      }
+    },
+    {
+      "name": "ShiftKey",
+      "target": true,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "shiftkey"
+        ],
+        "lever": [
+          "shiftkey"
+        ],
+        "ashby": [
+          "shiftkey"
+        ]
+      }
+    }
+  ],
+  "notes": {
+    "gartner": "Gartner (BDE, Irving TX) runs on Workday, which has no public JSON board API in this set. Keep Gartner in the deep sweep chat workflow, or add a Workday puller later if it becomes the bottleneck."
+  }
+}

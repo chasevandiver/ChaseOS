@@ -1,0 +1,1 @@
+Run the target-company pull (Mon/Thu cadence). Same as /radar-pull but step 2 is `node agents/ats-pull.mjs --targets-only`. Score, apply tiers, report A/B/C counts and every Notion write. No em dashes.

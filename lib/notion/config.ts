@@ -33,13 +33,25 @@ export const RADAR_DB = {
   },
 } as const;
 
-// Radar Status select options.
+// Radar Status select options. Verified and Expired exist in the live data
+// (written by the radar-hygiene agent); the dashboard must know them or those
+// rows silently vanish from every filter.
 export const RADAR_STATUS = {
   new: "New",
   reviewing: "Reviewing",
+  verified: "Verified",
   applied: "Applied",
   passed: "Passed",
+  expired: "Expired",
 } as const;
+
+// Statuses that count as a live, unapplied target ("hot"). Expired never
+// belongs here.
+export const RADAR_HOT_STATUSES: readonly string[] = [
+  RADAR_STATUS.new,
+  RADAR_STATUS.reviewing,
+  RADAR_STATUS.verified,
+];
 
 // Radar Tier select options. UI speaks in A/B/C, Notion stores the full label.
 export const TIER_LABELS = {

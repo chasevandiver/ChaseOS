@@ -1,4 +1,5 @@
 import type { PipelineRow, Project, RadarRole } from "@/lib/notion/data";
+import { RADAR_HOT_STATUSES } from "@/lib/notion/config";
 import { relativeDays, todayLocalISO } from "./format";
 
 // The AI Core display is a pure derivation over live Notion data: the deepest
@@ -42,7 +43,7 @@ export function deriveMission(
     .filter((r) => r.nextDate && r.nextDate.slice(0, 10) >= today)
     .sort((a, b) => (a.nextDate! < b.nextDate! ? -1 : 1));
   const hotTargets = (radar ?? []).filter(
-    (r) => r.tier === "A" && (r.status === "New" || r.status === "Reviewing")
+    (r) => r.tier === "A" && RADAR_HOT_STATUSES.includes(r.status ?? "")
   );
   const building = (projects ?? []).filter(
     (p) => p.status === "Active" || p.status === "Building"
