@@ -29,7 +29,7 @@
           "hubspot"
         ]
       },
-      "verifiedAt": "2026-07-26"
+      "verifiedAt": "2026-07-27"
     },
     {
       "name": "Klaviyo",
@@ -51,7 +51,7 @@
           "klaviyo"
         ]
       },
-      "verifiedAt": "2026-07-26"
+      "verifiedAt": "2026-07-27"
     },
     {
       "name": "Cvent",
@@ -71,6 +71,12 @@
         ],
         "workable": [
           "cvent"
+        ],
+        "workday": [
+          "cvent.wd1:External",
+          "cvent.wd1:Careers",
+          "cvent.wd1:CareerSite",
+          "cvent.wd5:External"
         ]
       }
     },
@@ -92,6 +98,10 @@
         ],
         "workable": [
           "optimizely"
+        ],
+        "workday": [
+          "optimizely.wd5:External",
+          "optimizely.wd1:External"
         ]
       }
     },
@@ -112,6 +122,10 @@
           "semrush"
         ],
         "workable": [
+          "semrush"
+        ],
+        "smartrecruiters": [
+          "Semrush",
           "semrush"
         ]
       }
@@ -137,7 +151,7 @@
           "sproutsocial"
         ]
       },
-      "verifiedAt": "2026-07-26"
+      "verifiedAt": "2026-07-27"
     },
     {
       "name": "Constant Contact",
@@ -160,7 +174,7 @@
           "constantcontact"
         ]
       },
-      "verifiedAt": "2026-07-26"
+      "verifiedAt": "2026-07-27"
     },
     {
       "name": "Braze",
@@ -182,7 +196,7 @@
           "braze"
         ]
       },
-      "verifiedAt": "2026-07-26"
+      "verifiedAt": "2026-07-27"
     },
     {
       "name": "ActiveCampaign",
@@ -198,7 +212,7 @@
           "activecampaign"
         ]
       },
-      "verifiedAt": "2026-07-26"
+      "verifiedAt": "2026-07-27"
     },
     {
       "name": "Attentive",
@@ -214,7 +228,7 @@
           "attentive"
         ]
       },
-      "verifiedAt": "2026-07-26"
+      "verifiedAt": "2026-07-27"
     },
     {
       "name": "Iterable",
@@ -230,7 +244,7 @@
           "iterable"
         ]
       },
-      "verifiedAt": "2026-07-26"
+      "verifiedAt": "2026-07-27"
     },
     {
       "name": "Customer.io",
@@ -247,7 +261,7 @@
           "customer-io"
         ]
       },
-      "verifiedAt": "2026-07-26"
+      "verifiedAt": "2026-07-27"
     },
     {
       "name": "Bloomreach",
@@ -263,7 +277,7 @@
           "bloomreach"
         ]
       },
-      "verifiedAt": "2026-07-26"
+      "verifiedAt": "2026-07-27"
     },
     {
       "name": "Hootsuite",
@@ -282,7 +296,7 @@
           "hootsuite"
         ]
       },
-      "verifiedAt": "2026-07-26"
+      "verifiedAt": "2026-07-27"
     },
     {
       "name": "Pipedrive",
@@ -364,7 +378,7 @@
           "contentful"
         ]
       },
-      "verifiedAt": "2026-07-26"
+      "verifiedAt": "2026-07-27"
     },
     {
       "name": "Webflow",
@@ -377,7 +391,7 @@
           "webflow"
         ]
       },
-      "verifiedAt": "2026-07-26"
+      "verifiedAt": "2026-07-27"
     },
     {
       "name": "Eventbrite",
@@ -421,7 +435,7 @@
           "rainfocus"
         ]
       },
-      "verifiedAt": "2026-07-26"
+      "verifiedAt": "2026-07-27"
     },
     {
       "name": "Splash",
@@ -481,7 +495,7 @@
           "impact"
         ]
       },
-      "verifiedAt": "2026-07-26"
+      "verifiedAt": "2026-07-27"
     },
     {
       "name": "Crossbeam",
@@ -543,7 +557,7 @@
           "gong"
         ]
       },
-      "verifiedAt": "2026-07-26"
+      "verifiedAt": "2026-07-27"
     },
     {
       "name": "Outreach",
@@ -559,7 +573,7 @@
           "outreach"
         ]
       },
-      "verifiedAt": "2026-07-26"
+      "verifiedAt": "2026-07-27"
     },
     {
       "name": "Salesloft",
@@ -572,7 +586,7 @@
           "salesloft"
         ]
       },
-      "verifiedAt": "2026-07-26"
+      "verifiedAt": "2026-07-27"
     },
     {
       "name": "ZoomInfo",
@@ -585,7 +599,7 @@
           "zoominfo"
         ]
       },
-      "verifiedAt": "2026-07-26"
+      "verifiedAt": "2026-07-27"
     },
     {
       "name": "Demandbase",
@@ -610,7 +624,7 @@
           "6sense"
         ]
       },
-      "verifiedAt": "2026-07-26"
+      "verifiedAt": "2026-07-27"
     },
     {
       "name": "o9 Solutions",
@@ -663,9 +677,9 @@
     {
       "name": "ShiftKey",
       "target": true,
-      "verified": false,
-      "ats": null,
-      "slug": null,
+      "verified": true,
+      "ats": "ashby",
+      "slug": "shiftkey",
       "candidates": {
         "greenhouse": [
           "shiftkey"
@@ -675,6 +689,371 @@
         ],
         "ashby": [
           "shiftkey"
+        ]
+      },
+      "verifiedAt": "2026-07-27"
+    },
+    {
+      "name": "Gartner",
+      "target": true,
+      "verified": true,
+      "ats": "workday",
+      "slug": "gartner.wd5:EXT",
+      "candidates": {
+        "workday": [
+          "gartner.wd5:EXT"
+        ]
+      },
+      "verifiedAt": "2026-07-27"
+    },
+    {
+      "name": "Salesforce",
+      "target": false,
+      "verified": true,
+      "ats": "workday",
+      "slug": "salesforce.wd12:External_Career_Site",
+      "candidates": {
+        "workday": [
+          "salesforce.wd12:External_Career_Site"
+        ]
+      },
+      "verifiedAt": "2026-07-27"
+    },
+    {
+      "name": "Adobe",
+      "target": false,
+      "verified": true,
+      "ats": "workday",
+      "slug": "adobe.wd5:external_experienced",
+      "candidates": {
+        "workday": [
+          "adobe.wd5:external_experienced"
+        ]
+      },
+      "verifiedAt": "2026-07-27"
+    },
+    {
+      "name": "CrowdStrike",
+      "target": false,
+      "verified": true,
+      "ats": "workday",
+      "slug": "crowdstrike.wd5:crowdstrikecareers",
+      "candidates": {
+        "workday": [
+          "crowdstrike.wd5:crowdstrikecareers"
+        ]
+      },
+      "verifiedAt": "2026-07-27"
+    },
+    {
+      "name": "Alkami",
+      "target": true,
+      "verified": true,
+      "ats": "workday",
+      "slug": "alkami.wd12:Alkami",
+      "candidates": {
+        "workday": [
+          "alkami.wd12:Alkami",
+          "alkami.wd12:alkami"
+        ]
+      },
+      "verifiedAt": "2026-07-27"
+    },
+    {
+      "name": "Integrity Marketing Group",
+      "target": true,
+      "verified": true,
+      "ats": "workday",
+      "slug": "integritymarketing.wd1:Integrity",
+      "candidates": {
+        "workday": [
+          "integritymarketing.wd1:Integrity"
+        ]
+      },
+      "verifiedAt": "2026-07-27"
+    },
+    {
+      "name": "CINT",
+      "target": false,
+      "verified": true,
+      "ats": "smartrecruiters",
+      "slug": "Cint",
+      "candidates": {
+        "smartrecruiters": [
+          "Cint",
+          "CINT"
+        ]
+      },
+      "verifiedAt": "2026-07-27"
+    },
+    {
+      "name": "Toast",
+      "target": true,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "toast",
+      "candidates": {
+        "greenhouse": [
+          "toasttab",
+          "toast"
+        ]
+      },
+      "verifiedAt": "2026-07-27"
+    },
+    {
+      "name": "Zeta Global",
+      "target": true,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "zetaglobal",
+      "candidates": {
+        "greenhouse": [
+          "zetaglobal"
+        ]
+      },
+      "verifiedAt": "2026-07-27"
+    },
+    {
+      "name": "Samsara",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "samsara",
+      "candidates": {
+        "greenhouse": [
+          "samsara"
+        ]
+      },
+      "verifiedAt": "2026-07-27"
+    },
+    {
+      "name": "Motive",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "gomotive",
+      "candidates": {
+        "greenhouse": [
+          "gomotive"
+        ]
+      },
+      "verifiedAt": "2026-07-27"
+    },
+    {
+      "name": "Asana",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "asana",
+      "candidates": {
+        "greenhouse": [
+          "asana"
+        ]
+      },
+      "verifiedAt": "2026-07-27"
+    },
+    {
+      "name": "Checkr",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "checkr",
+      "candidates": {
+        "greenhouse": [
+          "checkr"
+        ]
+      },
+      "verifiedAt": "2026-07-27"
+    },
+    {
+      "name": "Mercury",
+      "target": true,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "mercury",
+      "candidates": {
+        "greenhouse": [
+          "mercury"
+        ]
+      },
+      "verifiedAt": "2026-07-27"
+    },
+    {
+      "name": "Ramp",
+      "target": false,
+      "verified": true,
+      "ats": "ashby",
+      "slug": "ramp",
+      "candidates": {
+        "ashby": [
+          "ramp"
+        ]
+      },
+      "verifiedAt": "2026-07-27"
+    },
+    {
+      "name": "Ethos",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "ethoslife",
+      "candidates": {
+        "greenhouse": [
+          "ethoslife"
+        ]
+      },
+      "verifiedAt": "2026-07-27"
+    },
+    {
+      "name": "Flexport",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "flexport",
+      "candidates": {
+        "greenhouse": [
+          "flexport"
+        ]
+      },
+      "verifiedAt": "2026-07-27"
+    },
+    {
+      "name": "Drata",
+      "target": false,
+      "verified": true,
+      "ats": "ashby",
+      "slug": "drata",
+      "candidates": {
+        "ashby": [
+          "drata"
+        ]
+      },
+      "verifiedAt": "2026-07-27"
+    },
+    {
+      "name": "1Password",
+      "target": false,
+      "verified": true,
+      "ats": "ashby",
+      "slug": "1password",
+      "candidates": {
+        "ashby": [
+          "1password"
+        ]
+      },
+      "verifiedAt": "2026-07-27"
+    },
+    {
+      "name": "GitLab",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "gitlab",
+      "candidates": {
+        "greenhouse": [
+          "gitlab"
+        ]
+      },
+      "verifiedAt": "2026-07-27"
+    },
+    {
+      "name": "Grafana Labs",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "grafanalabs",
+      "candidates": {
+        "greenhouse": [
+          "grafanalabs"
+        ]
+      },
+      "verifiedAt": "2026-07-27"
+    },
+    {
+      "name": "Databricks",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "databricks",
+      "candidates": {
+        "greenhouse": [
+          "databricks"
+        ]
+      },
+      "verifiedAt": "2026-07-27"
+    },
+    {
+      "name": "Calendly",
+      "target": true,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "calendly",
+      "candidates": {
+        "greenhouse": [
+          "calendly"
+        ]
+      },
+      "verifiedAt": "2026-07-27"
+    },
+    {
+      "name": "Twilio",
+      "target": false,
+      "verified": true,
+      "ats": "greenhouse",
+      "slug": "twilio",
+      "candidates": {
+        "greenhouse": [
+          "twilio"
+        ]
+      },
+      "verifiedAt": "2026-07-27"
+    },
+    {
+      "name": "ClickUp",
+      "target": false,
+      "verified": true,
+      "ats": "ashby",
+      "slug": "clickup",
+      "candidates": {
+        "ashby": [
+          "clickup"
+        ]
+      },
+      "verifiedAt": "2026-07-27"
+    },
+    {
+      "name": "Playfly Sports",
+      "target": true,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "greenhouse": [
+          "playflysports",
+          "playfly"
+        ],
+        "lever": [
+          "playfly",
+          "playflysports"
+        ]
+      }
+    },
+    {
+      "name": "Learfield",
+      "target": true,
+      "verified": false,
+      "ats": null,
+      "slug": null,
+      "candidates": {
+        "workday": [
+          "learfield.wd1:External",
+          "learfield.wd5:External"
+        ],
+        "greenhouse": [
+          "learfield"
+        ],
+        "lever": [
+          "learfield"
         ]
       }
     }

@@ -93,8 +93,16 @@
   "seniorityExclusions": [
     "\\bvp\\b", "vice president", "\\bcmo\\b", "\\bcro\\b", "chief ", "\\bdirector, sales\\b",
     "\\bintern\\b", "internship", "\\bhead of\\b",
-    "\\bsenior\\b", "\\bsr\\.?\\b", "\\bstrategic\\b", "\\benterprise\\b",
+    "\\bsenior\\b", "\\bsr\\.?\\b",
     "\\bprincipal\\b", "\\bstaff\\b", "\\blead\\b(?!\\s*gen)",
-    "customer success", "\\bcsm\\b"
-  ]
+    "customer success", "\\bcsm\\b",
+    "technical account", "\\bengineering\\b", "\\bengineer\\b", "onboarding"
+  ],
+  "segmentExclusions": [
+    "\\bstrategic\\b", "\\benterprise\\b"
+  ],
+  "segmentExclusionExemptTitles": [
+    "\\bsdr\\b", "\\bbdr\\b", "sales development", "business development"
+  ],
+  "_segmentNote": "Strategic/Enterprise in a title means a senior seat EXCEPT for SDR/BDR roles, where it only names the segment they prospect into (an Enterprise BDR is an entry seat). Exempt titles skip the segment exclusions but still hit the seniority list above."
 }

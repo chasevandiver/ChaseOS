@@ -5,12 +5,14 @@ application-stage rejections, 18 unanswered). The targeting config was retuned
 at the same time (see config/rubric.md, "winnable-first retune"). The config
 fixes what gets applied to; this playbook fixes how.
 
-## 1. Reply to the stalled recruiter threads first
+## 1. Treat unsolicited staffing-agency outreach as suspect
 
-All five live Recruiter Screen rows in the Pipeline are inbound recruiters
-waiting on a reply from Chase, not the other side. They are the only human
-responses in the entire pipeline. Clear that backlog before sending a single
-new application. (The weekly review of Jul 13-20 flagged the same thing.)
+Chase's read (2026-07-27): the five inbound recruiter threads in the Pipeline
+are scams. Do not chase them, and mark their Pipeline rows Closed so they stop
+polluting the response-rate stat. Rule going forward: unsolicited contract
+recruiter outreach gets verified (real agency domain, real client, no fees, no
+personal data requests) before any reply; direct applications through company
+ATSes are the pipeline.
 
 ## 2. Keep the sales resume current and filed
 

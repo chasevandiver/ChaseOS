@@ -22,7 +22,22 @@ async function getJSON(url) {
   return { data: await res.json() };
 }
 
-const stripHtml = (s) => (s ?? "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+// Decode HTML entities AFTER stripping tags. Workday double-encodes ("5-8&#43;
+// years"), which blinded the experience gate until decoded.
+const decodeEntities = (s) =>
+  s
+    .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(Number(n)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCharCode(parseInt(n, 16)))
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&(?:nbsp|thinsp|ensp|emsp);/g, " ")
+    .replace(/&(?:rsquo|lsquo);/g, "'")
+    .replace(/&(?:rdquo|ldquo);/g, '"')
+    .replace(/&(?:ndash|mdash);/g, "-");
+const stripHtml = (s) =>
+  decodeEntities((s ?? "").replace(/<[^>]+>/g, " ")).replace(/\s+/g, " ").trim();
 const isoDay = (d) => {
   const dt = new Date(d);
   return isNaN(dt) ? null : dt.toISOString().slice(0, 10);
@@ -145,11 +160,179 @@ export async function pullWorkable(slug) {
   return { ok: true, jobs };
 }
 
+// ---------- Workday ----------
+// Public JSON endpoints behind every myworkdayjobs.com career site:
+//   POST https://{host}.myworkdayjobs.com/wday/cxs/{tenant}/{site}/jobs
+//   GET  https://{host}.myworkdayjobs.com/wday/cxs/{tenant}/{site}{externalPath}
+// Slug format: "{host}:{site}" e.g. "gartner.wd5:EXT" (tenant = host before the dot).
+// The list endpoint gives title/location/postedOn only; descriptions require a
+// per-job detail fetch. To keep request volume sane, details are fetched only
+// for postings whose age parses within maxDetailAgeDays and whose title looks
+// like a sales/marketing role. Everything else would auto-C at the track or
+// freshness gate anyway, so no accuracy is lost.
+const WORKDAY_TITLE_PREFILTER =
+  /account executive|account manager|\bsales\b|business development|sales development|\bsdr\b|\bbdr\b|partnership|sponsorship|client executive|marketing/i;
+
+function workdayAgeDays(postedOn) {
+  const s = (postedOn ?? "").toLowerCase();
+  if (s.includes("today")) return 0;
+  if (s.includes("yesterday")) return 1;
+  const m = s.match(/(\d+)\+?\s*days? ago/);
+  if (!m) return null;
+  const n = parseInt(m[1], 10);
+  return s.includes("+") ? n + 1 : n; // "30+ Days Ago" means at least 30
+}
+
+export async function pullWorkday(slug, { maxDetailAgeDays = 31, maxDetails = 120 } = {}) {
+  const [host, site] = slug.split(":");
+  if (!host || !site) return { ok: false, reason: `bad workday slug "${slug}", expected host:site` };
+  const tenant = host.split(".")[0];
+  const base = `https://${host}.myworkdayjobs.com/wday/cxs/${tenant}/${site}`;
+  const postings = [];
+  let offset = 0;
+  let total = Infinity;
+  while (offset < total && offset < 2000) {
+    const res = await fetch(`${base}/jobs`, {
+      method: "POST",
+      headers: { ...UA, "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({ appliedFacets: {}, limit: 20, offset, searchText: "" }),
+    });
+    if (res.status === 404) return { ok: false, reason: "board not found" };
+    if (!res.ok) return { ok: false, reason: `HTTP ${res.status}` };
+    const data = await res.json();
+    // Workday only reports a meaningful total on the first page; later pages
+    // return total: 0 while still carrying jobs. Latch it once.
+    if (total === Infinity) total = data.total ?? 0;
+    const page = data.jobPostings ?? [];
+    if (!page.length) break;
+    postings.push(...page);
+    offset += page.length;
+  }
+
+  const jobs = [];
+  let detailsFetched = 0;
+  for (const p of postings) {
+    if (!p.title || !p.externalPath) continue;
+    const ageDays = workdayAgeDays(p.postedOn);
+    const fresh = ageDays !== null && ageDays <= maxDetailAgeDays;
+    if (!fresh || !WORKDAY_TITLE_PREFILTER.test(p.title) || detailsFetched >= maxDetails) {
+      // Emit without description; gates will C it on freshness/track. Posted
+      // date is derived from Workday's own "Posted N Days Ago" text.
+      jobs.push({
+        ats: "workday",
+        atsJobId: p.bulletFields?.[0] ?? p.externalPath,
+        title: p.title,
+        location: p.locationsText ?? "",
+        url: `https://${host}.myworkdayjobs.com/${site}${p.externalPath.replace(/^\/?[^/]*/, "")}` ,
+        postedDate: ageDays === null ? null : isoDay(Date.now() - ageDays * 86400000),
+        postedDateSource: ageDays === null ? null : `postedOn "${p.postedOn}"`,
+        comp: null,
+        description: "",
+      });
+      continue;
+    }
+    detailsFetched++;
+    try {
+      const { data } = await getJSON(`${base}${p.externalPath}`);
+      const info = data?.jobPostingInfo ?? {};
+      const desc = stripHtml(info.jobDescription ?? "");
+      jobs.push({
+        ats: "workday",
+        atsJobId: info.jobReqId ?? p.externalPath,
+        title: p.title,
+        location: [info.location, ...(info.additionalLocations ?? [])].filter(Boolean).join("; ") || (p.locationsText ?? ""),
+        url: info.externalUrl ?? `https://${host}.myworkdayjobs.com/${site}${p.externalPath.replace(/^\/?[^/]*/, "")}`,
+        postedDate: info.startDate ? isoDay(info.startDate) : (ageDays === null ? null : isoDay(Date.now() - ageDays * 86400000)),
+        postedDateSource: info.startDate ? "startDate" : `postedOn "${p.postedOn}"`,
+        comp: extractCompText(info.jobDescription ?? "") ?? extractCompText(desc),
+        description: desc,
+        remote: /remote/i.test(info.remoteType ?? "") || undefined,
+      });
+    } catch {
+      // Detail fetch failed: keep the listing row without description rather
+      // than dropping a live posting.
+      jobs.push({
+        ats: "workday",
+        atsJobId: p.externalPath,
+        title: p.title,
+        location: p.locationsText ?? "",
+        url: `https://${host}.myworkdayjobs.com/${site}${p.externalPath.replace(/^\/?[^/]*/, "")}`,
+        postedDate: ageDays === null ? null : isoDay(Date.now() - ageDays * 86400000),
+        postedDateSource: ageDays === null ? null : `postedOn "${p.postedOn}"`,
+        comp: null,
+        description: "",
+      });
+    }
+  }
+  return { ok: true, jobs };
+}
+
+// ---------- SmartRecruiters ----------
+// https://api.smartrecruiters.com/v1/companies/{slug}/postings?limit=100
+export async function pullSmartRecruiters(slug) {
+  const postings = [];
+  let offset = 0;
+  while (offset < 1000) {
+    const { data, notFound } = await getJSON(
+      `https://api.smartrecruiters.com/v1/companies/${encodeURIComponent(slug)}/postings?limit=100&offset=${offset}`
+    );
+    if (notFound) return { ok: false, reason: "company not found" };
+    const page = data?.content ?? [];
+    postings.push(...page);
+    if (page.length < 100) break;
+    offset += 100;
+  }
+  if (!postings.length) return { ok: false, reason: "no postings" };
+  const jobs = [];
+  let detailsFetched = 0;
+  for (const p of postings) {
+    const locParts = [p.location?.city, p.location?.region, p.location?.country?.toUpperCase()].filter(Boolean);
+    const ageDays = p.releasedDate ? Math.floor((Date.now() - new Date(p.releasedDate).getTime()) / 86400000) : null;
+    const job = {
+      ats: "smartrecruiters",
+      atsJobId: String(p.id),
+      title: p.name,
+      location: (p.location?.remote ? "Remote; " : "") + locParts.join(", "),
+      url: `https://jobs.smartrecruiters.com/${encodeURIComponent(slug)}/${p.id}`,
+      postedDate: p.releasedDate ? isoDay(p.releasedDate) : null,
+      postedDateSource: p.releasedDate ? "releasedDate" : null,
+      comp: null,
+      description: "",
+      remote: p.location?.remote === true || undefined,
+    };
+    // The list API carries no description. Fetch the ad body only for fresh,
+    // role-relevant postings; everything else auto-Cs on track/freshness anyway.
+    if (ageDays !== null && ageDays <= 31 && WORKDAY_TITLE_PREFILTER.test(p.name) && detailsFetched < 60) {
+      detailsFetched++;
+      try {
+        const { data } = await getJSON(
+          `https://api.smartrecruiters.com/v1/companies/${encodeURIComponent(slug)}/postings/${p.id}`
+        );
+        const sections = data?.jobAd?.sections ?? {};
+        const text = ["companyDescription", "jobDescription", "qualifications", "additionalInformation"]
+          .map((k) => stripHtml(sections[k]?.text ?? ""))
+          .filter(Boolean)
+          .join(" ");
+        if (text) {
+          job.description = text;
+          job.comp = extractCompText(text);
+        }
+      } catch {
+        // keep the listing row without description
+      }
+    }
+    jobs.push(job);
+  }
+  return { ok: true, jobs };
+}
+
 export const PULLERS = {
   greenhouse: pullGreenhouse,
   lever: pullLever,
   ashby: pullAshby,
   workable: pullWorkable,
+  workday: pullWorkday,
+  smartrecruiters: pullSmartRecruiters,
 };
 
 // Recognize an ATS-hosted URL already sitting in the Radar so the hygiene

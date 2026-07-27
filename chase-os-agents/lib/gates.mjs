@@ -20,6 +20,11 @@ const rxAny = (patterns, s) => patterns.some((p) => new RegExp(p, "i").test(s));
 export function classifyTrack(title, profile) {
   const t = ` ${title.toLowerCase()} `;
   if (rxAny(profile.seniorityExclusions, t)) return { track: null, reason: "seniority/level excluded" };
+  // Strategic/Enterprise mark senior seats, except in SDR/BDR titles where
+  // they only name the segment being prospected (an Enterprise BDR is entry).
+  const segmentExempt = rxAny(profile.segmentExclusionExemptTitles ?? [], t);
+  if (!segmentExempt && rxAny(profile.segmentExclusions ?? [], t))
+    return { track: null, reason: "seniority/level excluded" };
   if (rxAny(profile.tracks.Sales.titleKeywords, t)) return { track: "Sales" };
   if (rxAny(profile.tracks.Marketing.titleKeywords, t)) return { track: "Marketing" };
   return { track: null, reason: "title matches neither track's keyword list" };
@@ -38,23 +43,50 @@ export function checkFreshness(postedDate, profile) {
   return { pass: true, ageDays };
 }
 
+// Countries/regions whose "remote" is not Chase's remote. A blocklist is
+// leaky by nature, but ATS location strings are short and formulaic, and a
+// miss only sends one extra row to the scorer, never a fake job.
+const FOREIGN_LOC =
+  /(canada|ontario|quebec|vancouver|toronto|calgary|alberta|british columbia|\buk\b|united kingdom|britain|ireland|dublin|london|germany|berlin|munich|france|paris|spain|madrid|portugal|lisbon|netherlands|amsterdam|belgium|poland|sweden|norway|denmark|finland|italy|austria|vienna|switzerland|zurich|czech|romania|hungary|ukraine|turkey|emea|apac|latam|australia|sydney|new zealand|india|philippines|indonesia|vietnam|thailand|malaysia|singapore|japan|tokyo|brazil|mexico|colombia|panama|argentina|chile|peru|costa rica|uruguay|ecuador|venezuela|guatemala|uae|dubai|saudi|kuwait|qatar|bahrain|israel|egypt|africa|nigeria|kenya|hong kong|china|taiwan|korea)/;
+
+// US state names and ", XX" abbreviations. A remote role that names specific
+// states means "remote, but you must live there" - only Texas qualifies.
+const US_STATE_NAMES =
+  /(alabama|alaska|arizona|arkansas|california|colorado|connecticut|delaware|florida|georgia|hawaii|idaho|illinois|indiana|\biowa\b|kansas|kentucky|louisiana|maine|maryland|massachusetts|michigan|minnesota|mississippi|missouri|montana|nebraska|nevada|new hampshire|new jersey|new mexico|new york|north carolina|north dakota|\bohio\b|oklahoma|oregon|pennsylvania|rhode island|south carolina|south dakota|tennessee|\butah\b|vermont|virginia|washington(?! ?dc)|west virginia|wisconsin|wyoming)/;
+const US_STATE_ABBR =
+  /[,;]\s*(al|ak|az|ar|ca|co|ct|de|fl|ga|hi|id|il|in|ia|ks|ky|la|me|md|ma|mi|mn|ms|mo|mt|ne|nv|nh|nj|nm|ny|nc|nd|oh|ok|or|pa|ri|sc|sd|tn|ut|vt|va|wa|wv|wi|wy)\b/;
+
 export function checkLocation(job, profile) {
   const loc = (job.location ?? "").toLowerCase();
+  const title = (job.title ?? "").toLowerCase();
   const desc = (job.description ?? "").toLowerCase();
-  // "Remote - Germany" / "Remote - Ireland" style locations are remote for
-  // someone else. Only US-eligible remote counts.
-  const foreignRemote = /\bremote\b/.test(loc) &&
-    /remote\s*[-–(,]?\s*(?!us\b|usa\b|u\.s\.|united states|north america|texas|tx\b)[a-z]/.test(loc) &&
-    !/(\bus\b|\busa\b|u\.s\.|united states|north america|texas|\btx\b)/.test(loc);
-  const remote =
-    !foreignRemote &&
-    (job.remote === true ||
-      /\bremote\b/.test(loc) ||
-      /(fully remote|remote[- ]first|work from anywhere|us[- ]remote|remote \(us\))/.test(desc));
-  if (remote) return { pass: true, kind: "remote" };
-  if (profile.location.dfwCities.some((c) => loc.includes(c) || loc.includes("texas") || loc.includes(", tx")))
+  // DFW city names collide with other states (Arlington VA, Plano IL); a DFW
+  // match only counts when no non-Texas state is named alongside it.
+  const namesOtherState =
+    (US_STATE_NAMES.test(loc) || US_STATE_ABBR.test(loc)) && !/texas|\btx\b/.test(loc);
+  if (!namesOtherState && profile.location.dfwCities.some((c) => loc.includes(c)))
     return { pass: true, kind: "dfw" };
-  return { pass: false, kind: "out-of-area", reason: `"${job.location ?? "unstated"}" is neither remote nor DFW` };
+  // "Hybrid" or "X Office" means in-person presence somewhere that is not DFW.
+  if (/hybrid|\boffice\b|on[- ]site|onsite/.test(loc)) {
+    return { pass: false, kind: "out-of-area", reason: `"${job.location}" requires office presence outside DFW` };
+  }
+  const remoteSignal =
+    job.remote === true || /\bremote\b|work from anywhere/.test(loc) || /\bremote\b/.test(title);
+  if (remoteSignal) {
+    if (FOREIGN_LOC.test(loc)) {
+      return { pass: false, kind: "out-of-area", reason: `"${job.location}" is remote for another region, not US-remote` };
+    }
+    const stateRestricted = US_STATE_NAMES.test(loc) || US_STATE_ABBR.test(loc);
+    if (stateRestricted && !/texas|\btx\b/.test(loc)) {
+      return { pass: false, kind: "out-of-area", reason: `"${job.location}" is remote but restricted to states other than Texas` };
+    }
+    return { pass: true, kind: "remote" };
+  }
+  // Marketing copy like "we are remote-first" only counts when the posting
+  // names no concrete location that contradicts it.
+  if (!loc && /(fully remote|remote[- ]first|work from anywhere|us[- ]remote|remote \(us\))/.test(desc))
+    return { pass: true, kind: "remote" };
+  return { pass: false, kind: "out-of-area", reason: `"${job.location ?? "unstated"}" is neither US-remote nor DFW` };
 }
 
 // Find the highest years-of-experience requirement stated near sales-context
