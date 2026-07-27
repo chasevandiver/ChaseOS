@@ -28,8 +28,8 @@
         "sales representative", "sales executive", "sales manager",
         "account executive", "\\bae\\b"
       ],
-      "baseFloor": 65000,
-      "oteFloor": 130000,
+      "baseFloor": 55000,
+      "oteFloor": 90000,
       "maxRequiredYears": {
         "capB": 4,
         "autoC": 6,
@@ -81,7 +81,9 @@
     "outOfAreaRule": "Out-of-area roles are excluded, period. A role passes location only if it is explicitly remote-eligible or in a DFW city. No comp-based exception. Enforced in code."
   },
   "freshness": {
-    "maxAgeDays": 14,
+    "maxAgeDays": 30,
+    "freshDays": 14,
+    "agedRule": "Roles posted 15-30 days ago pass the gate but carry a 'confirm still open' flag, which caps them at Tier B until Chase verifies the posting is live. Over 30 days is an automatic C.",
     "missingDateRule": "If the ATS provides no posted date, the row is flagged 'date unverified' and capped at Tier B. Never guess a date."
   },
   "compRules": {
@@ -92,6 +94,7 @@
     "\\bvp\\b", "vice president", "\\bcmo\\b", "\\bcro\\b", "chief ", "\\bdirector, sales\\b",
     "\\bintern\\b", "internship", "\\bhead of\\b",
     "\\bsenior\\b", "\\bsr\\.?\\b", "\\bstrategic\\b", "\\benterprise\\b",
-    "\\bprincipal\\b", "\\bstaff\\b", "\\blead\\b(?!\\s*gen)"
+    "\\bprincipal\\b", "\\bstaff\\b", "\\blead\\b(?!\\s*gen)",
+    "customer success", "\\bcsm\\b"
   ]
 }

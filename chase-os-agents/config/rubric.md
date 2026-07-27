@@ -5,7 +5,8 @@ Fixed rubric for tiering Job Radar roles. The deterministic gates (track, freshn
 ## Gate rules added in the 2026-07 winnable-first retune
 
 - **Seniority**: titles containing Senior, Sr, Strategic, Enterprise, Principal, Staff, or Lead are excluded before scoring, alongside the existing VP/CMO/CRO/Chief/Director-of-Sales/Head-of/intern exclusions. The pivot targets a first quota-carrying seat; those titles require closing history the resume cannot show yet.
-- **Location**: a role passes only if it is explicitly remote-eligible or in a DFW city. Out-of-area is an automatic C at any comp level. The old "20% above floor" exception is gone; it filled the Radar with geo-locked enterprise roles.
+- **Location**: a role passes only if it is explicitly US-remote-eligible or in a DFW city. "Remote - Germany" style foreign-remote locations fail. Out-of-area is an automatic C at any comp level. The old "20% above floor" exception is gone; it filled the Radar with geo-locked enterprise roles.
+- **Freshness (updated 2026-07-27)**: up to 30 days old passes the gate, but anything over 14 days carries a "confirm the role is still open" flag, which caps it at Tier B until Chase verifies the posting. Over 30 days is an automatic C. Comp floors also dropped to $55k base / $90k OTE so SDR/BDR/SMB seats are not screened out by pay bands tuned for senior roles.
 - **Required experience**: if the JD demands 6+ years of sales experience it is an automatic C; 4-5 years is flagged and capped at Tier B. No stated requirement is never penalized.
 - **Marketing track cap**: Marketing is a backup track. Every Marketing role carries a config flag and is capped at Tier B, so it never competes with the sales pivot for A-tier attention.
 

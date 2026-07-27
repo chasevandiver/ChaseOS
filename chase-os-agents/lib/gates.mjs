@@ -31,16 +31,26 @@ export function checkFreshness(postedDate, profile) {
   if (ageDays > profile.freshness.maxAgeDays) {
     return { pass: false, reason: `posted ${ageDays} days ago, over the ${profile.freshness.maxAgeDays}-day limit` };
   }
+  const freshDays = profile.freshness.freshDays ?? profile.freshness.maxAgeDays;
+  if (ageDays > freshDays) {
+    return { pass: true, ageDays, flag: `posted ${ageDays} days ago, confirm the role is still open` };
+  }
   return { pass: true, ageDays };
 }
 
 export function checkLocation(job, profile) {
   const loc = (job.location ?? "").toLowerCase();
   const desc = (job.description ?? "").toLowerCase();
+  // "Remote - Germany" / "Remote - Ireland" style locations are remote for
+  // someone else. Only US-eligible remote counts.
+  const foreignRemote = /\bremote\b/.test(loc) &&
+    /remote\s*[-–(,]?\s*(?!us\b|usa\b|u\.s\.|united states|north america|texas|tx\b)[a-z]/.test(loc) &&
+    !/(\bus\b|\busa\b|u\.s\.|united states|north america|texas|\btx\b)/.test(loc);
   const remote =
-    job.remote === true ||
-    /\bremote\b/.test(loc) ||
-    /(fully remote|remote[- ]first|work from anywhere|us[- ]remote|remote \(us\))/.test(desc);
+    !foreignRemote &&
+    (job.remote === true ||
+      /\bremote\b/.test(loc) ||
+      /(fully remote|remote[- ]first|work from anywhere|us[- ]remote|remote \(us\))/.test(desc));
   if (remote) return { pass: true, kind: "remote" };
   if (profile.location.dfwCities.some((c) => loc.includes(c) || loc.includes("texas") || loc.includes(", tx")))
     return { pass: true, kind: "dfw" };
@@ -118,7 +128,10 @@ export function runGates(job, profile) {
   const fresh = checkFreshness(job.postedDate, profile);
   if (fresh.pass === false) return { autoTier: "C", reasons: [`freshness: ${fresh.reason}`] };
   if (fresh.pass === null) flags.push(fresh.flag);
-  else facts.ageDays = fresh.ageDays;
+  else {
+    facts.ageDays = fresh.ageDays;
+    if (fresh.flag) flags.push(fresh.flag);
+  }
   if (job.postedDateSource && job.postedDateSource.includes("upper bound")) {
     flags.push("posted date from updated_at, treat as an upper bound on freshness");
   }
